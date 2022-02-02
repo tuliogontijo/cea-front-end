@@ -1,0 +1,14 @@
+.containerForm {
+  margin: 32px 24px;
+  padding: 64px 32px;
+  border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  background-color: #fff;
+}
+
+.containerButtons {
+  display: flex;
+  margin-top: 64px;
+  justify-content: space-between;
+}

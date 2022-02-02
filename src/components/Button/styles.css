@@ -1,0 +1,23 @@
+.button {
+  border: none;
+  font-weight: 700;
+  padding: 8.9px 16px;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.button:hover, .button:focus {
+  cursor: pointer;
+}
+
+.buttonPrimary {
+  color: #fff;
+  font-size: 14px;
+  line-height: 14px;
+  transition: 0.5s all;
+  background-color: #52A9FA;
+}
+
+.buttonPrimary:hover, .buttonPrimary:focus {
+  background-color: #52a9fab6;
+}
