@@ -1,0 +1,17 @@
+.containerActions button {
+  padding: 0;
+  border: none;
+  background-color: transparent;
+}
+
+.containerActions button:hover, .containerActions button:focus {
+  cursor: pointer;
+}
+
+.iconAction {
+  margin-right: 4px;
+}
+
+.textAction {
+  margin-right: 24px;
+}

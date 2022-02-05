@@ -1,0 +1,11 @@
+.containerTable {
+  margin: 32px 24px 0;
+}
+
+.iconUpdate svg {
+  color: #FAAD14;
+}
+
+.iconDelete svg {
+  color: #FF4D4F;
+}
