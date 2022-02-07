@@ -3,11 +3,49 @@ import { enLocale } from "./utils/locale";
 
 import { ConfigProvider } from "antd";
 import ProTableAntd, { createIntl, IntlProvider } from "@ant-design/pro-table";
+import { CSVLink } from 'react-csv'
 
 import Button from "../Button";
 import EmptyState from "../EmptyState";
 
 const ptBRIntl = createIntl("pt-BR", enLocale);
+
+const data = [
+  {
+    id: "1",
+    username: "teste_01",
+    name: "Nome Sobrenome 01",
+    createdAt: "02/02/2022",
+  }]
+
+const ButtonAction = ({
+  type,
+  actionButton,
+  stylesButton,
+  iconButton,
+  textButton,
+}) => {
+
+  if (type === 'export') {
+    return (
+      <CSVLink data={`${data}`} className="button exportButton">
+        {iconButton}
+        {`${textButton}`}
+      </CSVLink>
+    );
+  }
+
+  return (
+    <Button
+      type="type"
+      handleClick={actionButton}
+      stylesButton={stylesButton}
+    >
+      {iconButton}
+      {` ${textButton}`}
+    </Button>
+  );
+}
 
 const ProTable = ({
   columns,
@@ -16,6 +54,7 @@ const ProTable = ({
   textButton,
   iconButton,
   dataSource,
+  typeButton,
   stylesButton,
   actionButton,
   ...props
@@ -23,14 +62,13 @@ const ProTable = ({
   const toolbar = {
     actions: [
       (
-        <Button
-          type="type"
-          handleClick={actionButton}
+        <ButtonAction
+          actionButton={actionButton}
+          iconButton={iconButton}
           stylesButton={stylesButton}
-        >
-          {iconButton}
-          {` ${textButton}`}
-        </Button>
+          textButton={textButton}
+          type={typeButton}
+        />
       )
     ],
     settings: false,

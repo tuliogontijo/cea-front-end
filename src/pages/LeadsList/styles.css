@@ -1,0 +1,22 @@
+.containerTable {
+  margin: 32px 24px 0;
+}
+
+.exportButton{
+  color: #fff;
+  display: block;
+  font-size: 14px;
+  line-height: 14px;
+  transition: 0.3s all;
+  background-color: #0b0b0b;
+  border: 1px solid #0b0b0b;
+}
+
+.exportButton:hover {
+  background-color: white;
+  border: 1px solid #0b0b0b;
+  color: #0b0b0b;
+}
+.iconPadding {
+  padding-right: 8.9px;
+}
