@@ -25,6 +25,8 @@ const FreePostRegister = ({ isEdit }) => {
   useEffect(() => {
     if (isEdit && !initialValues) {
       const freePost = DATA_MOCK.find((post) => post.id === id);
+      const imgURledit = isEdit ? freePost.imageUrl : "";
+      setImgUrl(imgURledit);
 
       form.setFieldsValue({
         title: freePost.title,
@@ -113,10 +115,11 @@ const FreePostRegister = ({ isEdit }) => {
             label="URL da imagem:"
             rules={[{ required: true, message: "Campo obrigatório! Preencha corretamente!" }]}
           >
+            
             <Input
               placeholder="Informe a URL da imagem (Proporção preferencial: 500x200)"
               onBlur={handleBlur}
-            />
+              />
           </Item>
 
           {imgUrl ?

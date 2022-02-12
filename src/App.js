@@ -37,11 +37,11 @@ function App() {
             element={<FreePostListRegister />}
             path="/conteudo-gratuito/cadastro"
           />
-          {/*  
+           
           <Route
             element={<FreePostListRegister isEdit />}
             path="/conteudo-gratuito/edicao/:id"
-          /> */}
+          />
         </Routes>
       </Layout>
     </BrowserRouter>
