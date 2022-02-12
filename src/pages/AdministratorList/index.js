@@ -47,24 +47,28 @@ const AdministratorList = () => {
     {
       title: "Nome de Acesso",
       dataIndex: "username",
+      width: "200px",
       hideInSearch: true,
       ellipsis: true,
     },
     {
       title: "Nome Completo",
       key: "name",
+      width: "auto",
       dataIndex: "name",
       ellipsis: true,
     },
     {
       title: "Data de Criação",
       dataIndex: "createdAt",
+      width: "160px",
       hideInSearch: true,
       ellipsis: true,
     },
     {
       title: "Ações",
       valueType: "option",
+      width: "230px",
       render: ({ props }) => <ActionTable actions={actionsTable} record={props.record} />,
     }
   ];
@@ -85,7 +89,7 @@ const AdministratorList = () => {
           stylesButton="buttonPrimary"
           iconButton={<PlusOutlined />}
           actionButton={navigateAdministratorRegister}
-          request={() => console.log("FAZER REQUISIÇÃO")}
+          request={(params) => console.log("FAZER REQUISIÇÃO", params)}
         />
       </div>
     </div>

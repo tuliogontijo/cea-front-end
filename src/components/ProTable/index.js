@@ -12,6 +12,7 @@ const ptBRIntl = createIntl("pt-BR", enLocale);
 const ProTable = ({
   columns,
   request,
+  search,
   textButton,
   iconButton,
   dataSource,
@@ -51,11 +52,16 @@ const ProTable = ({
           locale={{
             emptyText: <EmptyState />,
           }}
+          search={search}
           {...props}
         />
       </IntlProvider>
     </ConfigProvider>
   );
 }
+
+ProTable.defaultProps = {
+  search: true,
+};
 
 export default ProTable;

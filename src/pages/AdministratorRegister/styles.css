@@ -12,3 +12,15 @@
   margin-top: 64px;
   justify-content: space-between;
 }
+
+.tipsUsername {
+  font-size: 13.5px;
+}
+
+.tipsUsername p {
+  margin-bottom: 6px;
+}
+
+.tipsIcon {
+  margin-right: 6px;
+}
