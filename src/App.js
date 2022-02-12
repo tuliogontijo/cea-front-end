@@ -4,6 +4,8 @@ import Layout from "./components/Layout";
 import AdministratorList from "./pages/AdministratorList";
 import AdministratorRegister from "./pages/AdministratorRegister";
 import FreePostList from "./pages/FreePostList";
+import FreePostListRegister from "./pages/FreePostRegister";
+
 
 import "./styles/less/common.less";
 
@@ -31,11 +33,11 @@ function App() {
             element={<FreePostList />}
             path="/conteudo-gratuito/listagem"
           />
-          {/*          <Route
+          <Route
             element={<FreePostListRegister />}
             path="/conteudo-gratuito/cadastro"
           />
-
+          {/*  
           <Route
             element={<FreePostListRegister isEdit />}
             path="/conteudo-gratuito/edicao/:id"

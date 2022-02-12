@@ -1,8 +1,8 @@
-  
-  
+
+
 import { PageHeader } from "antd";
 import { EditOutlined, DeleteFilled, PlusOutlined } from "@ant-design/icons";
-import {format} from "date-fns";
+import { format } from "date-fns";
 
 import ProTable from "../../components/ProTable";
 import ActionTable from "../../components/ActionTable";
@@ -15,7 +15,7 @@ import { useNavigate } from "react-router-dom";
 
 DATA_MOCK.map((freePost) => {
   freePost.status = freePost.status ? "Online" : "Offline";
-  freePost.createdAt = format(new Date(freePost.createdAt),"dd/MM/yyyy");
+  freePost.createdAt = format(new Date(freePost.createdAt), "dd/MM/yyyy");
   return null;
 });
 
@@ -57,7 +57,7 @@ const FreePostList = () => {
     {
       title: "Título",
       dataIndex: "title",
-      key:"tile",
+      key: "tile",
       ellipsis: true,
     },
     {
@@ -81,6 +81,7 @@ const FreePostList = () => {
     {
       title: "Ações",
       valueType: "option",
+      width: "230px",
       render: ({ props }) => <ActionTable actions={actionsTable} record={props.record} />,
     }
   ];
