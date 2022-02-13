@@ -57,7 +57,7 @@ const FreePostList = () => {
     {
       title: "Título",
       dataIndex: "title",
-      key: "tile",
+      key: "title",
       ellipsis: true,
     },
     {

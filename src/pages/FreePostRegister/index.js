@@ -1,6 +1,7 @@
 import { createRef, useEffect, useState } from "react";
-import { Form, Input, PageHeader, Switch } from "antd";
+import { Form, Input, PageHeader, Switch, Alert } from "antd";
 import { useNavigate, useParams } from "react-router-dom";
+import { ImportOutlined, SaveOutlined } from "@ant-design/icons"
 import Button from "../../components/Button";
 
 import RouterBreadcrumb from "../../components/RouterBreadcrumb";
@@ -16,11 +17,13 @@ const FreePostRegister = ({ isEdit }) => {
 
   const [initialValues, setInitialValues] = useState(false);
   const [imgUrl, setImgUrl] = useState('');
-  const [status, setStatus] = useState('false');
+  const [status, setStatus] = useState(false);
+  const [imgUrlOk, setImgUrlOk] = useState(true);
 
   const refForm = createRef();
   const [form] = Form.useForm();
   const navigate = useNavigate();
+
 
   useEffect(() => {
     if (isEdit && !initialValues) {
@@ -63,10 +66,16 @@ const FreePostRegister = ({ isEdit }) => {
 
   const handleBlur = (e) => {
     setImgUrl(e.target.value);
+    setImgUrlOk(true);
   }
 
-  const handleSwitchStatus = (e) => {
+  const handleSwitchStatus = () => {
     setStatus(!status);
+  }
+
+  const handleImgUrlError = () => {
+    setImgUrlOk(!imgUrlOk);
+    setImgUrl('');
   }
 
   return (
@@ -113,22 +122,35 @@ const FreePostRegister = ({ isEdit }) => {
             required
             name="imageUrl"
             label="URL da imagem:"
-            rules={[{ required: true, message: "Campo obrigatório! Preencha corretamente!" }]}
+            rules={
+              [
+                { required: true, message: "Campo obrigatório! Preencha corretamente!" },
+                { type: 'url', message: "O caminho inserido não é uma URL válida" }
+              ]}
           >
-            
+
             <Input
-              placeholder="Informe a URL da imagem (Proporção preferencial: 500x200)"
+              placeholder="Informe a URL da imagem (Proporção preferencial: 500x145)"
               onBlur={handleBlur}
-              />
+            />
           </Item>
 
-          {imgUrl ?
-            <div className="previewImg">
-              <img src={imgUrl} alt="Preview da Imagem" />
-            </div>
-            :
-            <div className="previewImgEmpty">Preview da Imagem</div>
+          {
+            imgUrlOk ? imgUrl ?
+              <div className="previewImg">
+                <img src={imgUrl} alt="Preview da Imagem" onError={handleImgUrlError} />
+              </div>
+              :
+              <div className="previewImg">Preview da Imagem</div> :
+              <Alert
+                message="O caminho inserido não contém uma imagem."
+                description="Revisar o campo 'URL da imagem'"
+                type="warning"
+                className="errorImgUrl"
+                showIcon
+              />
           }
+
 
           <Item
             required
@@ -140,16 +162,16 @@ const FreePostRegister = ({ isEdit }) => {
               checkedChildren="Online"
               unCheckedChildren="Offline"
               onChange={handleSwitchStatus}
-              defaultChecked
-              style={status ? { backgroundColor: "green" } : {}}
+              style={status ? { backgroundColor: "green" } : { backgroundColor: "red" }}
             />
           </Item>
 
           <div className="containerButtons">
             <Button
-              stylesButton="buttonPrimary"
+              stylesButton="buttonBack"
               handleClick={() => navigate("/conteudo-gratuito/listagem")}
             >
+              <ImportOutlined className="iconActionPage" />
               Voltar
             </Button>
 
@@ -157,6 +179,7 @@ const FreePostRegister = ({ isEdit }) => {
               type="submit"
               stylesButton="buttonPrimary"
             >
+              <SaveOutlined className="iconActionPage" />
               Salvar
             </Button>
           </div>
