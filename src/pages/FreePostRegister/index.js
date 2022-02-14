@@ -27,20 +27,20 @@ const FreePostRegister = ({ isEdit }) => {
 
   useEffect(() => {
     if (isEdit && !initialValues) {
-      const freePost = DATA_MOCK.find((post) => post.id === id);
-      const imgURledit = isEdit ? freePost.imageUrl : "";
-      setImgUrl(imgURledit);
+      const freePost = DATA_MOCK.find((freePost) => freePost.id === id);
+      setStatus(freePost.status === "Online" ? true : false);
+      setImgUrl(freePost.imageUrl);
 
       form.setFieldsValue({
         title: freePost.title,
         description: freePost.description,
         imageUrl: freePost.imageUrl,
-        status: freePost.status ? "Online" : "Offline"
+        status: freePost.status
       });
 
       setInitialValues(true);
     }
-  }, [isEdit, initialValues, id, form]);
+  }, [isEdit, initialValues, id, form, status]);
 
   const pathScreen = !isEdit ? "/cadastro" : "/edicao";
   const breadcrumbName = !isEdit ? "Cadastro" : "Edição";
@@ -74,7 +74,7 @@ const FreePostRegister = ({ isEdit }) => {
   }
 
   const handleImgUrlError = () => {
-    setImgUrlOk(!imgUrlOk);
+    setImgUrlOk(false);
     setImgUrl('');
   }
 
@@ -151,9 +151,7 @@ const FreePostRegister = ({ isEdit }) => {
               />
           }
 
-
           <Item
-            required
             name="status"
             label="Status da publicação:"
             className="switch"
@@ -161,6 +159,7 @@ const FreePostRegister = ({ isEdit }) => {
             <Switch
               checkedChildren="Online"
               unCheckedChildren="Offline"
+              checked={status}
               onChange={handleSwitchStatus}
               style={status ? { backgroundColor: "green" } : { backgroundColor: "red" }}
             />
