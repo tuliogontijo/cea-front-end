@@ -159,11 +159,15 @@
   border-radius: 4px;
 }
 
-#create-administrator-form {
+#create-administrator-form, #create-freepost-form {
   width: 500px;
 }
 
-#create-administrator-form .ant-row, #create-administrator-form .ant-form-item {
+#create-administrator-form .ant-row,
+#create-administrator-form .ant-form-item
+#create-freepost-form .ant-row,
+#create-freepost-form .ant-form-item
+ {
   flex-flow: column wrap;
 }
 
@@ -173,4 +177,9 @@
 
 .anticon-close-circle {
   color: #d14605;
+}
+
+#create-freepost-form .ant-row,
+#create-freepost-form .ant-form-item {
+  margin-bottom: 24px;
 }

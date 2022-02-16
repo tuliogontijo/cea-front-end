@@ -14,10 +14,27 @@
   color: #fff;
   font-size: 14px;
   line-height: 14px;
-  transition: 0.5s all;
-  background-color: #52A9FA;
+  transition: 0.3s all;
+  background-color: #0b0b0b;
+  border: 1px solid #0b0b0b;
 }
 
 .buttonPrimary:hover, .buttonPrimary:focus {
-  background-color: #52a9fab6;
+  background-color: white;
+  border: 1px solid #0b0b0b;
+  color: #0b0b0b;
+}
+
+.buttonBack {
+  color: #0b0b0b;
+  font-size: 14px;
+  line-height: 14px;
+  transition: 0.3s all;
+  background-color: white;
+  border: 1px solid #0b0b0b;
+}
+
+.buttonBack:hover, .buttonBack:focus {
+  background-color: #0b0b0b;
+  color: white;
 }

@@ -1,7 +1,7 @@
 import { createRef, useEffect, useState } from "react";
 import { Form, Input, PageHeader } from "antd";
 import { useNavigate, useParams } from "react-router-dom";
-import { CheckCircleFilled, CloseCircleFilled } from "@ant-design/icons";
+import { CheckCircleFilled, CloseCircleFilled, SaveOutlined, ImportOutlined } from "@ant-design/icons";
 
 import Button from "../../components/Button";
 import RouterBreadcrumb from "../../components/RouterBreadcrumb";
@@ -66,7 +66,7 @@ const AdministratorRegister = ({ isEdit }) => {
       tipsTwo: regexTipsTwoChar.test(value) && regexTipsTwoNumber.test(value),
       tipsThree: value.length !== 0 && !regexTipsThree.test(value),
     });
-  } 
+  }
 
   const onSubmit = (values) => {
     console.log('valid -> ', validChar);
@@ -118,7 +118,7 @@ const AdministratorRegister = ({ isEdit }) => {
               </span>
               O <b>Nome de Acesso</b> deve possuir caracteres especiais como @!#$%&.
             </p>
-            
+
             <p>
               <span className="tipsIcon">
                 {validChar.tipsTwo ? (<CheckCircleFilled />) : (<CloseCircleFilled />)}
@@ -135,9 +135,11 @@ const AdministratorRegister = ({ isEdit }) => {
 
           <div className="containerButtons">
             <Button
-              stylesButton="buttonPrimary"
+              stylesButton="buttonBack"
               handleClick={() => navigate("/administradores/listagem")}
             >
+              <ImportOutlined className="iconActionPage" />
+
               Voltar
             </Button>
 
@@ -145,6 +147,7 @@ const AdministratorRegister = ({ isEdit }) => {
               type="submit"
               stylesButton="buttonPrimary"
             >
+              <SaveOutlined className="iconActionPage" />
               Salvar
             </Button>
           </div>
