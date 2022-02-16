@@ -88,29 +88,6 @@ const FreePostList = () => {
         },
       },
     },
-    // {
-    //   title: '状态',
-    //   dataIndex: 'state',
-    //   filters: true,
-    //   onFilter: true,
-    //   valueType: 'select',
-    //   valueEnum: {
-    //     all: { text: '全部', status: 'Default' },
-    //     open: {
-    //       text: '未解决',
-    //       status: 'Error',
-    //     },
-    //     closed: {
-    //       text: '已解决',
-    //       status: 'Success',
-    //       disabled: true,
-    //     },
-    //     processing: {
-    //       text: '解决中',
-    //       status: 'Processing',
-    //     },
-    //   },
-    // },
     {
       title: "Data de Criação",
       dataIndex: "createdAt",
