@@ -6,7 +6,6 @@ import AdministratorRegister from "./pages/AdministratorRegister";
 import FreePostList from "./pages/FreePostList";
 import FreePostListRegister from "./pages/FreePostRegister";
 
-
 import "./styles/less/common.less";
 
 function App() {

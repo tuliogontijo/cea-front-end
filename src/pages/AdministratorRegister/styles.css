@@ -24,3 +24,26 @@
 .tipsIcon {
   margin-right: 6px;
 }
+
+.modalMessage p {
+  margin-top: 16px;
+  text-align: center;
+  font-size: 16px;
+}
+
+.modalMessage .modalMessageAlert {
+  font-weight: 600;
+  font-size: 18px;
+}
+
+.buttonModal {
+  color: #fff;
+  transition: 0.3s all;
+  background-color: #BFB372;
+  border: 1px solid #BFB372;
+}
+
+.buttonModal:hover {
+  color: #BFB372;
+  background-color: #fff;
+}

@@ -14,6 +14,7 @@ const Modal = ({
 
   return (
     <ModalAntd
+      centered
       visible={visible}
       destroyOnClose={true}
       footer={footerButtons}
