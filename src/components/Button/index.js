@@ -1,9 +1,10 @@
 import "./styles.css";
 
-const Button = ({ type, children, stylesButton, handleClick }) => {
+const Button = ({ type, children, stylesButton, handleClick, disabled }) => {
   return (
     <button
       type={type}
+      disabled={disabled}
       onClick={handleClick}
       className={`button ${stylesButton}`}
     >

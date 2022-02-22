@@ -1,4 +1,4 @@
-import { ProfileOutlined, FormOutlined, TableOutlined } from '@ant-design/icons';
+import { ProfileOutlined, FormOutlined, TableOutlined } from "@ant-design/icons";
 
 export const ROUTE = {
   path: "/",

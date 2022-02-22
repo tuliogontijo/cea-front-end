@@ -1,0 +1,9 @@
+.iconSuccess {
+  display: flex;
+  justify-content: center;
+}
+
+.iconSuccess svg {
+  width: 50px;
+  height: 50px;
+}

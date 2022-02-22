@@ -25,6 +25,12 @@
   color: #0b0b0b;
 }
 
+.buttonPrimary:disabled {
+  color: #fff;
+  cursor: not-allowed;
+  background-color: #0b0b0bc0;
+}
+
 .buttonBack {
   color: #0b0b0b;
   font-size: 14px;
