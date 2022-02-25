@@ -15,6 +15,7 @@ import { AdministratorService } from "../../services";
 import "./styles.css";
 
 const routes = [
+
   {
     active: false,
     path: "/administradores",

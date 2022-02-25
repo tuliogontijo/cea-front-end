@@ -1,56 +1,97 @@
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Layout from "./components/Layout";
-import AdministratorList from "./pages/AdministratorList";
-import AdministratorRegister from "./pages/AdministratorRegister";
-import FreePostList from "./pages/FreePostList";
-import FreePostListRegister from "./pages/FreePostRegister";
 
+import Login from "./pages/Login";
 import LeadsList from "./pages/LeadsList";
+import FreePostList from "./pages/FreePostList";
+import AdministratorList from "./pages/AdministratorList";
+import FreePostListRegister from "./pages/FreePostRegister";
+import AdministratorRegister from "./pages/AdministratorRegister";
 
 import "./styles/less/common.less";
+
+const PrivateRoute = ({ children }) => {
+  return (
+    <Layout>
+      {children}
+    </Layout>
+  )
+};
 
 function App() {
   return (
     <BrowserRouter>
-      <Layout>
-        <Routes>
-          <Route
-            element={<AdministratorList />}
-            path="/administradores/listagem"
-          />
+      <Routes>
+        <Route
+          element={(
+            <PrivateRoute>
+              <AdministratorList />
+            </PrivateRoute>
+          )}
+          path="/administradores/listagem"
+        />
 
-          <Route
-            element={<AdministratorRegister />}
-            path="/administradores/cadastro"
-          />
+        <Route
+          element={(
+            <PrivateRoute>
+              <AdministratorRegister />
+            </PrivateRoute>
+          )}
+          path="/administradores/cadastro"
+        />
 
-          <Route
-            element={<AdministratorRegister isEdit />}
-            path="/administradores/edicao/:id"
-          />
+        <Route
+          element={(
+            <PrivateRoute>
+              <AdministratorRegister isEdit />
+            </PrivateRoute>
+          )}
+          path="/administradores/edicao/:id"
+        />
 
-          <Route
-            element={<FreePostList />}
-            path="/conteudo-gratuito/listagem"
-          />
-          <Route
-            element={<FreePostListRegister />}
-            path="/conteudo-gratuito/cadastro"
-          />
+        <Route
+          element={(
+            <PrivateRoute>
+              <FreePostList />
+            </PrivateRoute>
+          )}
+          path="/conteudo-gratuito/listagem"
+        />
 
-          <Route
-            element={<FreePostListRegister isEdit />}
-            path="/conteudo-gratuito/edicao/:id"
-          />
+        <Route
+          element={(
+            <PrivateRoute>
+              <FreePostListRegister />
+            </PrivateRoute>
+          )}
+          path="/conteudo-gratuito/cadastro"
+        />
 
-          <Route
-            element={<LeadsList />}
-            path="/leads/listagem"
-          />
-        </Routes>
-      </Layout>
-    </BrowserRouter>
+        <Route
+          element={(
+            <PrivateRoute>
+              <FreePostListRegister isEdit />
+            </PrivateRoute>
+          )}
+          path="/conteudo-gratuito/edicao/:id"
+        />
+
+        <Route
+          element={(
+            <PrivateRoute>
+              <LeadsList />
+            </PrivateRoute>
+          )}
+          path="/leads/listagem"
+        />
+
+        <Route
+          element={<Login />}
+          path="/"
+        />
+      </Routes >
+    </BrowserRouter >
   );
 }
 
