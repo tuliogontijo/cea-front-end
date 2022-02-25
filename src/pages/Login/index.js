@@ -5,8 +5,9 @@ import logo from "../../images/logo.png";
 
 import Button from "../../components/Button";
 
-import "./styles.css";
 import { useNavigate } from 'react-router-dom';
+
+import styles from "./styles.module.css";
 
 const { Item } = Form;
 
@@ -22,9 +23,10 @@ const Login = () => {
     console.log('Failed:', errorInfo);
   };
   return (
-    <div className="container">
+    <div className={styles.container}>
       <img src={logo} alt="logo" />
       <h1>Painel Administrativo Comunidade Mães de Impacto</h1>
+
       <Form
         initialValues={{
           remember: true,
@@ -47,6 +49,7 @@ const Login = () => {
             prefix={<UserOutlined />}
             placeholder="Login" />
         </Item>
+
         <Item
           name="password"
           rules={[
@@ -60,9 +63,10 @@ const Login = () => {
             prefix={<LockOutlined />}
             placeholder="Senha" />
         </Item>
+
         <Button
           type="submit"
-          stylesButton="buttonPrimary buttonSubmit"
+          stylesButton={`buttonPrimary ${styles.buttonSubmit}`}
         >
           Entrar
         </Button>

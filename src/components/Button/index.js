@@ -1,5 +1,3 @@
-import "./styles.css";
-
 const Button = ({ type, children, stylesButton, handleClick, disabled }) => {
   return (
     <button

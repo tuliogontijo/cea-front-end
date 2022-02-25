@@ -3,7 +3,7 @@ import { CSVLink } from "react-csv";
 
 import { LeadService } from "../../services";
 
-const ButtonCSV = ({ textButton, iconButton }) => {
+const ButtonCSV = ({ textButton, iconButton, stylesButton }) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -49,7 +49,7 @@ const ButtonCSV = ({ textButton, iconButton }) => {
       headers={headers}
       onClick={getData}
       asyncOnClick={true}
-      className="button exportButton"
+      className={stylesButton}
     >
       {iconButton}
       {textButtonValue}

@@ -2,7 +2,7 @@ import { CheckCircleOutlined } from "@ant-design/icons";
 
 import Modal from "../..";
 
-import "./styles.css";
+import styles from "./styles.module.css";
 
 const ModalSuccess = ({ buttons, visible, onCloseModal, children }) => {
   return (
@@ -11,7 +11,7 @@ const ModalSuccess = ({ buttons, visible, onCloseModal, children }) => {
       visible={visible}
       onCloseModal={onCloseModal}
     >
-      <div className="iconSuccess">
+      <div className={styles.iconSuccess}>
         <CheckCircleOutlined color="#018942" />
       </div>
 

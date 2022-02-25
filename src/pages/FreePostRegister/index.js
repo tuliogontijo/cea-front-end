@@ -2,8 +2,9 @@ import { createRef, useEffect, useState } from "react";
 import { Form, Input, PageHeader, Switch, Alert } from "antd";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
 import { ImportOutlined, SaveOutlined } from "@ant-design/icons"
-import Button from "../../components/Button";
 
+import Button from "../../components/Button";
+import Loader from "../../components/Loader";
 import RouterBreadcrumb from "../../components/RouterBreadcrumb";
 import ModalError from "../../components/Modal/components/ModalError";
 import ModalSuccess from "../../components/Modal/components/ModalSuccess";
@@ -12,27 +13,26 @@ import { formatRoutes } from "./utils/formatRoutes";
 
 import { FreepostService } from "../../services";
 
-import "./styles.css";
-const { TextArea } = Input;
+import styles from "./styles.module.css";
 
+const { TextArea } = Input;
 const { Item } = Form;
 
 const FreePostRegister = ({ isEdit }) => {
   const { id } = useParams();
-
-  const [initialValues, setInitialValues] = useState(false);
-  const [imgUrl, setImgUrl] = useState('');
-  const [status, setStatus] = useState(false);
-  const [imgUrlOk, setImgUrlOk] = useState(true);
-  const { state } = useLocation();
-  const [modalError, setModalError] = useState(false);
-  const [modalSuccess, setModalSuccess] = useState(false);
-  const [messageError, setMessageError] = useState(false);
-
   const refForm = createRef();
   const [form] = Form.useForm();
   const navigate = useNavigate();
+  const { state } = useLocation();
 
+  const [imgUrl, setImgUrl] = useState('');
+  const [status, setStatus] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [imgUrlOk, setImgUrlOk] = useState(true);
+  const [modalError, setModalError] = useState(false);
+  const [messageError, setMessageError] = useState("");
+  const [modalSuccess, setModalSuccess] = useState(false);
+  const [initialValues, setInitialValues] = useState(false);
 
   useEffect(() => {
     if (isEdit && !initialValues) {
@@ -81,6 +81,7 @@ const FreePostRegister = ({ isEdit }) => {
     };
 
     try {
+      setLoading(true);
       const idUpdate = isEdit ? id : null;
       const operation = isEdit ? FreepostService.update : FreepostService.create;
       await operation(payload, idUpdate);
@@ -95,6 +96,8 @@ const FreePostRegister = ({ isEdit }) => {
         setMessageError(e?.response?.data?.message);
       }
       setModalError(true);
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -114,23 +117,24 @@ const FreePostRegister = ({ isEdit }) => {
 
   return (
     <div>
+      <Loader loading={loading} />
+
       <PageHeader
         title={titleScreen}
         breadcrumbRender={() => <RouterBreadcrumb routes={routes} />}
       />
 
-      <div className="containerForm">
+      <div className={styles.containerForm}>
         <Form
           form={form}
           ref={refForm}
           onFinish={onSubmit}
-          className="formAntd"
           name="create-freepost-form"
         >
           <Item
             required
             name="title"
-            label="Título:"
+            label="Título"
             rules={[{ required: true, message: "Campo obrigatório! Preencha corretamente!" }]}
           >
             <Input
@@ -141,7 +145,7 @@ const FreePostRegister = ({ isEdit }) => {
           <Item
             required
             name="description"
-            label="Descrição:"
+            label="Descrição"
             rules={[{ required: true, message: "Campo obrigatório! Preencha corretamente!" }]}
           >
             <TextArea
@@ -155,7 +159,7 @@ const FreePostRegister = ({ isEdit }) => {
           <Item
             required
             name="imageUrl"
-            label="URL da imagem:"
+            label="URL da imagem"
             rules={
               [
                 { required: true, message: "Campo obrigatório! Preencha corretamente!" },
@@ -171,24 +175,24 @@ const FreePostRegister = ({ isEdit }) => {
 
           {
             imgUrlOk ? imgUrl ?
-              <div className="previewImg">
+              <div className={styles.previewImg}>
                 <img src={imgUrl} alt="Preview da Imagem" onError={handleImgUrlError} />
               </div>
               :
-              <div className="previewImg">Preview da Imagem</div> :
+              <div className={styles.previewImg}>Preview da Imagem</div> :
               <Alert
                 message="O caminho inserido não contém uma imagem."
                 description="Revisar o campo 'URL da imagem'"
                 type="warning"
-                className="errorImgUrl"
+                className={styles.errorImgUrl}
                 showIcon
               />
           }
 
           <Item
             name="status"
-            label="Status da publicação:"
-            className="switch"
+            label="Status da publicação"
+            className={styles.switch}
           >
             <Switch
               checkedChildren="Online"
@@ -223,7 +227,7 @@ const FreePostRegister = ({ isEdit }) => {
       <ModalSuccess
         visible={modalSuccess}
         buttons={[{
-          styles: "buttonModal",
+          styles: "buttonDefault",
           handleClick: handleCloseModalSuccess,
           text: isEdit ? "Voltar para listagem" : "Fechar",
         }]}
@@ -241,7 +245,7 @@ const FreePostRegister = ({ isEdit }) => {
         visible={modalError}
         buttons={[{
           text: "Fechar",
-          styles: "buttonModal",
+          styles: "buttonDefault",
           handleClick: handleCloseModalError,
         }]}
         onCloseModal={handleCloseModalError}

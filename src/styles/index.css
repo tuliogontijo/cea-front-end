@@ -8,3 +8,161 @@ body {
 .iconActionPage {
   margin-right: 5px;
 }
+
+.button {
+  border: none;
+  font-weight: 700;
+  padding: 8.9px 16px;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.button:hover, .button:focus {
+  cursor: pointer;
+}
+
+.buttonPrimary {
+  color: #fff;
+  font-size: 14px;
+  line-height: 14px;
+  transition: 0.3s all;
+  background-color: #0b0b0b;
+  border: 1px solid #0b0b0b;
+}
+
+.buttonPrimary:hover, .buttonPrimary:focus {
+  background-color: white;
+  border: 1px solid #0b0b0b;
+  color: #0b0b0b;
+}
+
+.buttonPrimary:disabled {
+  color: #fff;
+  cursor: not-allowed;
+  background-color: #0b0b0bc0;
+}
+
+.buttonBack {
+  color: #0b0b0b;
+  font-size: 14px;
+  line-height: 14px;
+  transition: 0.3s all;
+  background-color: white;
+  border: 1px solid #0b0b0b;
+}
+
+.buttonBack:hover, .buttonBack:focus {
+  background-color: #0b0b0b;
+  color: white;
+}
+
+.container {
+  width: 100%;
+  height: 100%;
+}
+
+.containerHeader {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.titleHeader {
+  font-size: 16px;
+  font-weight: 900;
+}
+
+.userWelcomeHeader {
+  color: #0b0b0b;
+  font-weight: 600;
+}
+
+.userDownIconHeader {
+  margin-left: 8px;
+}
+
+.userWelcomeHeader:hover,
+.userWelcomeHeader:focus {
+  cursor: pointer;
+}
+
+.openDropdownText {
+  font-weight: 600;
+}
+
+.containerButtons {
+  display: flex;
+  margin-top: 64px;
+  justify-content: space-between;
+}
+
+.buttonDefault {
+  color: #BFB372;
+  transition: 0.3s all;
+  background-color: #fff;
+  border: 1px solid #BFB372;
+}
+
+.buttonDefault:hover {
+  color: #fff;
+  background-color: #BFB372;
+}
+
+.buttonBackground {
+  color: #fff;
+  transition: 0.3s all;
+  background-color: #BFB372;
+  border: 1px solid #BFB372;
+}
+
+.buttonBackground:hover {
+  color: #BFB372;
+  background-color: #fff;
+}
+
+.buttonMarginLeft {
+  margin-left: 24px;
+}
+
+.messageModalDelete {
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+}
+
+.messageModalDelete svg {
+  width: 50px;
+  height: 50px;
+  color: #d14605;
+}
+
+.messageModalDelete p {
+  font-size: 16px;
+  margin-top: 16px;
+  margin-bottom: 0;
+  text-align: center;
+}
+
+.modalMessageAlert {
+  font-weight: 600;
+  font-size: 18px;
+}
+
+.modalMessage p {
+  margin-top: 16px;
+  text-align: center;
+  font-size: 16px;
+}
+
+.modalMessage .modalMessageAlert {
+  font-weight: 600;
+  font-size: 18px;
+}
+
+.iconUpdate svg {
+  color: #FAAD14;
+}
+
+.iconDelete svg {
+  color: #FF4D4F;
+}

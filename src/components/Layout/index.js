@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 import { ConfigProvider } from "antd";
 import ptBR from "antd/lib/locale/pt_BR";
 import ProLayout from "@ant-design/pro-layout";
@@ -10,12 +8,8 @@ import { ROUTE } from "./route";
 
 import logo from "../../images/logo.png";
 
-import "./styles.css";
-
 const Layout = ({ children }) => {
-  const [collapsed, setCollpased] = useState(false);
-
-  let navigate = useNavigate();
+  const navigate = useNavigate();
 
   const handleClickItem = (event) => {
     event.preventDefault();
@@ -40,8 +34,8 @@ const Layout = ({ children }) => {
         title=""
         logo={logo}
         route={ROUTE}
-        collapsed={collapsed}
-        onCollapse={setCollpased}
+        collapsed={false}
+        fixedHeader={true}
         menuItemRender={menuItemRender}
         rightContentRender={() => <RightContent />}
       >

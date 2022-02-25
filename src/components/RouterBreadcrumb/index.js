@@ -1,13 +1,13 @@
 import { Breadcrumb } from "antd";
 import { Link } from "react-router-dom";
 
-import "./styles.css";
+import styles from "./styles.module.css";
 
 const itemRender = (route, _params, routes, paths) => {
   const last = routes.indexOf(route) === routes.length - 1;
 
   if (!route.active) {
-    return <span className="disabled-link">{route.breadcrumbName}</span>;
+    return <span className={styles.disabledLink}>{route.breadcrumbName}</span>;
   }
 
   return last ? (

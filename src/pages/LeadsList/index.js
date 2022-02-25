@@ -8,7 +8,8 @@ import ModalError from "../../components/Modal/components/ModalError";
 
 import { LeadService } from "../../services";
 
-import "./styles.css";
+import styles from "./styles.module.css";
+import ColumnDateTable from "../../components/ColumnDateTable";
 
 const routes = [
   {
@@ -83,6 +84,7 @@ const LeadsList = () => {
       dataIndex: "createdAt",
       hideInSearch: true,
       ellipsis: true,
+      render: (_, record) => <ColumnDateTable date={record?.createdAt} formatDate="DD/MM/YYYY" adapt />
     },
   ];
 
@@ -92,16 +94,17 @@ const LeadsList = () => {
         title="Listagem de Leads"
         breadcrumbRender={() => <RouterBreadcrumb routes={routes} />}
       />
-      <div className="containerTable">
+      <div className={styles.containerTable}>
         <ProTable
           search={false}
           rowKey="id"
           columns={columns}
           textButton="Exportar"
-          iconButton={<ExportOutlined className="iconPadding" />}
           typeButton="export"
           request={getData}
           actionRef={tableRef}
+          stylesButton={`${styles.csvButton} ${styles.exportButton}`}
+          iconButton={<ExportOutlined className={styles.iconPadding} />}
         />
       </div>
 
@@ -109,7 +112,7 @@ const LeadsList = () => {
         visible={modalError}
         buttons={[{
           text: "Fechar",
-          styles: "buttonModal",
+          styles: "buttonDefault",
           handleClick: handleCloseModalError,
         }]}
         onCloseModal={handleCloseModalError}
