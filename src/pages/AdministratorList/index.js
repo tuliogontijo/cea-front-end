@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { EditOutlined, DeleteFilled, PlusOutlined, WarningOutlined } from "@ant-design/icons";
 
 import Modal from "../../components/Modal";
+import Loader from "../../components/Loader";
 import ProTable from "../../components/ProTable";
 import ActionTable from "../../components/ActionTable";
 import ColumnDateTable from "../../components/ColumnDateTable";
@@ -12,10 +13,9 @@ import ModalError from "../../components/Modal/components/ModalError";
 
 import { AdministratorService } from "../../services";
 
-import "./styles.css";
+import styles from "./styles.module.css";
 
 const routes = [
-
   {
     active: false,
     path: "/administradores",
@@ -32,9 +32,10 @@ const AdministratorList = () => {
   const tableRef = useRef();
   const navigate = useNavigate();
 
+  const [loading, setLoading] = useState(false);
   const [modalError, setModalError] = useState(false);
-  const [messageError, setMessageError] = useState(false);
-  const [currentDelete, setCurrentDelete] = useState(false);
+  const [messageError, setMessageError] = useState({});
+  const [currentDelete, setCurrentDelete] = useState("");
   const [openModalDelete, setOpenModalDelete] = useState(false);
 
   const getData = async ({ current, pageSize, name }) => {
@@ -73,6 +74,7 @@ const AdministratorList = () => {
   const handleDelete = async () => {
     const id = currentDelete || "";
     try {
+      setLoading(true);
       await AdministratorService.delete(id);
 
       tableRef.current.reload();
@@ -83,6 +85,7 @@ const AdministratorList = () => {
       });
       setModalError(true);
     } finally {
+      setLoading(false);
       setOpenModalDelete(false);
     }
   }
@@ -90,12 +93,12 @@ const AdministratorList = () => {
   const buttonsModalDelete = [
     {
       text: "Fechar",
-      styles: "buttonDeleteCancel",
+      styles: "buttonDefault",
       handleClick: handleCloseModalDelete,
     },
     {
       text: "Deletar",
-      styles: "buttonConfirm",
+      styles: "buttonBackground buttonMarginLeft",
       handleClick: handleDelete,
     }
   ];
@@ -149,12 +152,14 @@ const AdministratorList = () => {
   
   return (
     <div>
+      <Loader loading={loading} />
+
       <PageHeader
         title="Listagem de Administradores"
         breadcrumbRender={() => <RouterBreadcrumb routes={routes} />}
       />
 
-      <div className="containerTable">
+      <div className={styles.containerTable}>
         <ProTable
           rowKey="id"
           columns={columns}
@@ -171,7 +176,7 @@ const AdministratorList = () => {
         visible={modalError}
         buttons={[{
           text: "Fechar",
-          styles: "buttonModal",
+          styles: "buttonDefault",
           handleClick: handleCloseModalError,
         }]}
         onCloseModal={handleCloseModalError}

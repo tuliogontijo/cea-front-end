@@ -1,0 +1,20 @@
+.containerForm {
+  margin: 32px 24px;
+  padding: 64px 32px;
+  border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  background-color: #fff;
+}
+
+.tipsUsername {
+  font-size: 13.5px;
+}
+
+.tipsUsername p {
+  margin-bottom: 6px;
+}
+
+.tipsIcon {
+  margin-right: 6px;
+}

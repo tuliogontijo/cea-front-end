@@ -3,15 +3,16 @@ import { PageHeader } from "antd";
 import { EditOutlined, DeleteFilled, PlusOutlined, WarningOutlined } from "@ant-design/icons";
 import { format } from "date-fns";
 
+import Modal from "../../components/Modal";
+import Loader from "../../components/Loader";
 import ProTable from "../../components/ProTable";
 import ActionTable from "../../components/ActionTable";
 import RouterBreadcrumb from "../../components/RouterBreadcrumb";
-import Modal from "../../components/Modal";
 import ModalError from "../../components/Modal/components/ModalError";
 
 import { FreepostService } from "../../services";
 
-import "./styles.css";
+import styles from "./styles.module.css";
 import { useNavigate } from "react-router-dom";
 
 const routes = [
@@ -27,14 +28,14 @@ const routes = [
   }
 ];
 
-
 const FreePostList = () => {
   const navigate = useNavigate();
   const tableRef = useRef();
 
+  const [loading, setLoading] = useState(false);
   const [modalError, setModalError] = useState(false);
-  const [messageError, setMessageError] = useState(false);
-  const [currentDelete, setCurrentDelete] = useState(false);
+  const [messageError, setMessageError] = useState({});
+  const [currentDelete, setCurrentDelete] = useState("");
   const [openModalDelete, setOpenModalDelete] = useState(false);
 
   const getData = async ({ current, pageSize, title, status }) => {
@@ -81,6 +82,7 @@ const FreePostList = () => {
   const handleDelete = async () => {
     const id = currentDelete || "";
     try {
+      setLoading(true);
       await FreepostService.delete(id);
 
       tableRef.current.reload();
@@ -91,6 +93,7 @@ const FreePostList = () => {
       });
       setModalError(true);
     } finally {
+      setLoading(false);
       setOpenModalDelete(false);
     }
   }
@@ -101,12 +104,12 @@ const FreePostList = () => {
   const buttonsModalDelete = [
     {
       text: "Fechar",
-      styles: "buttonDeleteCancel",
+      styles: "buttonDefault",
       handleClick: handleCloseModalDelete,
     },
     {
       text: "Deletar",
-      styles: "buttonConfirm",
+      styles: "buttonBackground buttonMarginLeft",
       handleClick: handleDelete,
     }
   ];
@@ -177,12 +180,14 @@ const FreePostList = () => {
 
   return (
     <div>
+      <Loader loading={loading} />
+
       <PageHeader
         title="Listagem de Conteúdos Gratuitos"
         breadcrumbRender={() => <RouterBreadcrumb routes={routes} />}
       />
 
-      <div className="containerTable">
+      <div className={styles.containerTable}>
         <ProTable
           rowKey="id"
           columns={columns}
@@ -194,11 +199,12 @@ const FreePostList = () => {
           actionRef={tableRef}
         />
       </div>
+
       <ModalError
         visible={modalError}
         buttons={[{
           text: "Fechar",
-          styles: "buttonModal",
+          styles: "buttonDefault",
           handleClick: handleCloseModalError,
         }]}
         onCloseModal={handleCloseModalError}

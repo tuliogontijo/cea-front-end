@@ -1,7 +1,8 @@
 import { Modal as ModalAntd } from "antd";
 
-import "./styles.less";
 import { formatFooter } from "./utils/formatFooter";
+
+import "./styles.less";
 
 const Modal = ({
   visible,

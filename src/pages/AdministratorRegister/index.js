@@ -13,7 +13,8 @@ import { validateUsername } from "./utils/validateUsername";
 
 import { AdministratorService } from "../../services";
 
-import "./styles.css";
+import styles from "./styles.module.css";
+import Loader from "../../components/Loader";
 
 const { Item } = Form;
 
@@ -24,10 +25,11 @@ const AdministratorRegister = ({ isEdit }) => {
   const navigate = useNavigate();
   const { state } = useLocation();
   
+  const [loading, setLoading] = useState(false);
+  const [dataCurrent, setDataCurrent] = useState({});
   const [modalError, setModalError] = useState(false);
-  const [dataCurrent, setDataCurrent] = useState(false);
+  const [messageError, setMessageError] = useState("");
   const [modalSuccess, setModalSuccess] = useState(false);
-  const [messageError, setMessageError] = useState(false);
   const [initialValues, setInitialValues] = useState(false);
   const [disabledSubmit, setDisabledSubmit] = useState(false);
   const [validChar, setValidChar] = useState({ tipsOne: false, tipsTwo: false, tipsThree: false });
@@ -85,6 +87,7 @@ const AdministratorRegister = ({ isEdit }) => {
     };
     
     try {
+      setLoading(true);
       const idUpdate = isEdit ? id : null;
       const operation = isEdit ? AdministratorService.update : AdministratorService.create;
       const { data } = await operation(payload, idUpdate);
@@ -102,22 +105,25 @@ const AdministratorRegister = ({ isEdit }) => {
       }
 
       setModalError(true);
+    } finally {
+      setLoading(false);
     }
   }
 
   return (
     <div>
+      <Loader loading={loading} />
+
       <PageHeader
         title={titleScreen}
         breadcrumbRender={() => <RouterBreadcrumb routes={routes} />}
       />
 
-      <div className="containerForm">
+      <div className={styles.containerForm}>
         <Form
           form={form}
           ref={refForm}
           onFinish={onSubmit}
-          className="formAntd"
           name="create-administrator-form"
         >
           <Item
@@ -143,22 +149,22 @@ const AdministratorRegister = ({ isEdit }) => {
             />
           </Item>
 
-          <div className="tipsUsername">
+          <div className={styles.tipsUsername}>
             <p>
-              <span className="tipsIcon">
+              <span className={styles.tipsIcon}>
                 {validChar.tipsOne ? (<CheckCircleFilled />) : (<CloseCircleFilled />)}
               </span>
               O <b>Nome de Acesso</b> deve possuir caracteres especiais como @!#$%&.
             </p>
 
             <p>
-              <span className="tipsIcon">
+              <span className={styles.tipsIcon}>
                 {validChar.tipsTwo ? (<CheckCircleFilled />) : (<CloseCircleFilled />)}
               </span>
               O <b>Nome de Acesso</b> também deve conter letras e números.
             </p>
             <p>
-              <span className="tipsIcon">
+              <span className={styles.tipsIcon}>
                 {validChar.tipsThree ? (<CheckCircleFilled />) : (<CloseCircleFilled />)}
               </span>
               Evite espaço para o <b>Nome de Acesso</b>. Substitua-os por (_).
@@ -190,7 +196,7 @@ const AdministratorRegister = ({ isEdit }) => {
       <ModalSuccess
         visible={modalSuccess}
         buttons={[{
-          styles: "buttonModal",
+          styles: "buttonDefault",
           handleClick: handleCloseModalSuccess,
           text: isEdit ? "Voltar para listagem" : "Fechar",
         }]}
@@ -208,14 +214,13 @@ const AdministratorRegister = ({ isEdit }) => {
             </>
           )}
         </div>
-        
       </ModalSuccess>
 
       <ModalError
         visible={modalError}
         buttons={[{
           text: "Fechar",
-          styles: "buttonModal",
+          styles: "buttonDefault",
           handleClick: handleCloseModalError,
         }]}
         onCloseModal={handleCloseModalError}
