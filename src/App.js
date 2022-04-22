@@ -4,11 +4,17 @@ import { AuthProvider } from "./context/AuthContext";
 import PrivateRoute from "./components/PrivateRoute";
 
 import Login from "./pages/Login";
+import PasswordRecovery from "./pages/PasswordRecovery";
+
 import LeadsList from "./pages/LeadsList";
+import StudentList from "./pages/StudentList";
+
 import FreePostList from "./pages/FreePostList";
 import FreePostRegister from "./pages/FreePostRegister";
+
 import ExclusivePostList from "./pages/ExclusivePostList";
 import ExclusivePostRegister from "./pages/ExclusivePostRegister";
+
 import AdministratorList from "./pages/AdministratorList";
 import AdministratorRegister from "./pages/AdministratorRegister";
 
@@ -26,6 +32,15 @@ function App() {
               </PrivateRoute>
             )}
             path="/administradores/listagem"
+          />
+
+          <Route
+            element={(
+              <PrivateRoute>
+                <AdministratorRegister />
+              </PrivateRoute>
+            )}
+            path="/administradores/cadastro"
           />
 
           <Route
@@ -110,10 +125,24 @@ function App() {
           />
 
           <Route
+            element={(
+              <PrivateRoute>
+                <StudentList />
+              </PrivateRoute>
+            )}
+            path="/alunos/listagem"
+          />
+
+          <Route
+            element={<PasswordRecovery />}
+            path="/recuperacao-senha"
+          />
+
+          <Route
             element={<Login />}
             path="/"
           />
-        </Routes >
+        </Routes>
       </BrowserRouter>
     </AuthProvider>
   );

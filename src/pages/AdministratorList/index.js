@@ -1,7 +1,7 @@
-import { useRef, useState } from "react";
-import { PageHeader } from "antd";
-import { useNavigate } from "react-router-dom";
-import { EditOutlined, DeleteFilled, PlusOutlined, WarningOutlined } from "@ant-design/icons";
+import {useRef, useState} from "react";
+import {PageHeader} from "antd";
+import {useNavigate} from "react-router-dom";
+import {EditFilled, DeleteFilled, PlusOutlined, WarningOutlined, LockFilled} from "@ant-design/icons";
 
 import Modal from "../../components/Modal";
 import Loader from "../../components/Loader";
@@ -11,9 +11,10 @@ import ColumnDateTable from "../../components/ColumnDateTable";
 import RouterBreadcrumb from "../../components/RouterBreadcrumb";
 import ModalError from "../../components/Modal/components/ModalError";
 
-import { AdministratorService } from "../../services";
+import {AdministratorService} from "../../services";
 
 import styles from "./styles.module.css";
+import ModalSuccess from "../../components/Modal/components/ModalSuccess";
 
 const routes = [
   {
@@ -33,12 +34,15 @@ const AdministratorList = () => {
   const navigate = useNavigate();
 
   const [loading, setLoading] = useState(false);
+  const [dataCurrent, setDataCurrent] = useState({});
   const [modalError, setModalError] = useState(false);
   const [messageError, setMessageError] = useState({});
   const [currentDelete, setCurrentDelete] = useState("");
+  const [modalSuccess, setModalSuccess] = useState(false);
   const [openModalDelete, setOpenModalDelete] = useState(false);
+  const [modalErrorPassword, setModalErrorPassword] = useState(false);
 
-  const getData = async ({ current, pageSize, name }) => {
+  const getData = async ({current, pageSize, name}) => {
     const query = {
       direction: "ASC",
       page: current - 1,
@@ -47,9 +51,9 @@ const AdministratorList = () => {
     };
 
     if (name) query.name = name;
-    
+
     try {
-      const { data } = await AdministratorService.listPerPage(query);
+      const {data} = await AdministratorService.listPerPage(query);
 
       return {
         success: true,
@@ -66,7 +70,25 @@ const AdministratorList = () => {
   }
 
   const navigateAdministratorRegister = () => navigate("/administradores/cadastro");
-  const handleEdit = (record) => navigate(`/administradores/edicao/${record.id}`, { state: { record }});
+
+  const passwordRecovery = async (username) => {
+    setLoading(true);
+
+    const payload = {username};
+
+    try {
+      const {data} = await AdministratorService.generatePassword(payload);
+
+      setDataCurrent({username: data?.username, password: data?.password});
+      setModalSuccess(true);
+    } catch (e) {
+      setModalErrorPassword(true);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  const handleEdit = (record) => navigate(`/administradores/edicao/${record.id}`, {state: {record}});
 
   const handleCloseModalError = () => setModalError(false);
   const handleCloseModalDelete = () => setOpenModalDelete(false);
@@ -90,6 +112,16 @@ const AdministratorList = () => {
     }
   }
 
+  const handleCloseModalSuccess = () => {
+    setDataCurrent({});
+    setModalSuccess(false);
+  }
+
+  const handleCloseModalErrorPassword = () => {
+    setDataCurrent({});
+    setModalErrorPassword(false);
+  }
+
   const buttonsModalDelete = [
     {
       text: "Fechar",
@@ -105,9 +137,14 @@ const AdministratorList = () => {
 
   const actionsTable = [
     {
+      name: "Recuperar senha",
+      func: (record) => passwordRecovery(record?.username),
+      icon: <LockFilled/>
+    },
+    {
       name: "Editar",
       func: handleEdit,
-      icon: <EditOutlined className="iconUpdate" />,
+      icon: <EditFilled className="iconUpdate"/>,
     },
     {
       name: "Deletar",
@@ -115,7 +152,7 @@ const AdministratorList = () => {
         setCurrentDelete(record.id);
         setOpenModalDelete(true);
       },
-      icon: <DeleteFilled className="iconDelete" />,
+      icon: <DeleteFilled className="iconDelete"/>,
     }
   ];
 
@@ -140,23 +177,23 @@ const AdministratorList = () => {
       width: "160px",
       hideInSearch: true,
       ellipsis: true,
-      render: (_, record) => <ColumnDateTable date={record?.createdAt} formatDate="DD/MM/YYYY" adapt />
+      render: (_, record) => <ColumnDateTable date={record?.createdAt} formatDate="DD/MM/YYYY" adapt/>
     },
     {
       title: "Ações",
       valueType: "option",
-      width: "230px",
-      render: ({ props }) => <ActionTable actions={actionsTable} record={props.record} />,
+      width: "380px",
+      render: ({props}) => <ActionTable actions={actionsTable} record={props.record}/>,
     }
   ];
-  
+
   return (
     <div>
-      <Loader loading={loading} />
+      <Loader loading={loading}/>
 
       <PageHeader
         title="Listagem de Administradores"
-        breadcrumbRender={() => <RouterBreadcrumb routes={routes} />}
+        breadcrumbRender={() => <RouterBreadcrumb routes={routes}/>}
       />
 
       <div className={styles.containerTable}>
@@ -165,7 +202,7 @@ const AdministratorList = () => {
           columns={columns}
           textButton="Cadastrar Novo"
           stylesButton="buttonPrimary"
-          iconButton={<PlusOutlined />}
+          iconButton={<PlusOutlined/>}
           actionButton={navigateAdministratorRegister}
           request={getData}
           actionRef={tableRef}
@@ -184,7 +221,7 @@ const AdministratorList = () => {
         <div className="messageModalDelete">
           <p>Falha ao {messageError?.type}!</p>
 
-          <p>Messagem de erro:</p>
+          <p>Mensagem de erro:</p>
           <p className="modalMessageAlert">{messageError?.text}</p>
         </div>
       </ModalError>
@@ -195,12 +232,44 @@ const AdministratorList = () => {
         onCloseModal={handleCloseModalDelete}
       >
         <div className="messageModalDelete">
-          <WarningOutlined />
+          <WarningOutlined/>
 
           <p><b>Atenção!</b></p>
           <p>Ao deletar o registro atual não é possível recuperá-lo!</p>
         </div>
       </Modal>
+
+      <ModalSuccess
+        visible={modalSuccess}
+        buttons={[{
+          text: "Fechar",
+          styles: "buttonDefault",
+          handleClick: handleCloseModalSuccess,
+        }]}
+        onCloseModal={handleCloseModalSuccess}
+      >
+        <div className="modalMessage">
+          <p>A senha temporária do administrator {dataCurrent?.username} é:</p>
+          <p className="modalMessageAlert">{dataCurrent?.password}</p>
+
+        </div>
+      </ModalSuccess>
+
+      <ModalError
+        visible={modalErrorPassword}
+        buttons={[{
+          text: "Fechar",
+          styles: "buttonDefault",
+          handleClick: handleCloseModalErrorPassword,
+        }]}
+        onCloseModal={handleCloseModalErrorPassword}
+      >
+        <div className="modalMessage">
+          <p>Não foi possível gerar a senha temporária.</p>
+
+          <p>Por favor, tente novamente mais tarde!</p>
+        </div>
+      </ModalError>
     </div>
   );
 }

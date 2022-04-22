@@ -161,6 +161,7 @@ body {
 
 .iconUpdate svg {
   color: #FAAD14;
+  margin-left: 18px;
 }
 
 .iconDelete svg {
@@ -169,4 +170,19 @@ body {
 
 .text-red {
   color: #FF4D4F;
+}
+
+.iconAlertStatusAtivo {
+  color: #47d600;
+  margin-right: 8px;
+}
+
+.iconAlertStatusInativo {
+  color: #FF1313;
+  margin-right: 8px;
+}
+
+.iconAlertStatusInativoEmBreve {
+  color: #FAAD14;
+  margin-right: 8px;
 }

@@ -1,0 +1,14 @@
+.containerTable {
+  margin: 32px 24px 0;
+}
+
+.modalEdit > p {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.modalEdit .labelEdit {
+  font-size: 14px;
+  margin-bottom: 6px;
+  font-weight: normal;
+}
