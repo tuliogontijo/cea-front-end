@@ -3,31 +3,37 @@ import { formatQuery } from "../utils/formatQuery";
 const ADMINISTRATOR = "Administrator";
 const FREEPOST = "Freepost";
 const LEADS = "Leads";
+const AUTH = "Auth";
 
 const ROUTES = [];
 
 ROUTES[ADMINISTRATOR] = {
-  listPerPage: (queries) => `/administrators/?${formatQuery(queries)}`,
-  create: () => "/administrators/",
-  update: (id) => `/administrators/${id}`,
-  delete: (id) => `/administrators/${id}`,
+  listPerPage: (queries) => `/admin/administrators/?${formatQuery(queries)}`,
+  create: () => "/admin/administrators/",
+  update: (id) => `/admin/administrators/${id}`,
+  delete: (id) => `/admin/administrators/${id}`,
 };
 
 ROUTES[FREEPOST] = {
-  listPerPage: (queries) => `/freeposts/?${formatQuery(queries)}`,
-  create: () => "/freeposts/",
-  update: (id) => `/freeposts/${id}`,
-  delete: (id) => `/freeposts/${id}`,
+  listPerPage: (queries) => `/admin/free-posts/?${formatQuery(queries)}`,
+  create: () => "/admin/free-posts/",
+  update: (id) => `/admin/free-posts/${id}`,
+  delete: (id) => `/admin/free-posts/${id}`,
 };
 
 ROUTES[LEADS] = {
-  listPerPage: (queries) => `/leads/?${formatQuery(queries)}`,
-  listAll: () => "/leads/all",
-}
+  listPerPage: (queries) => `/admin/leads/?${formatQuery(queries)}`,
+  listAll: () => "/admin/leads/all",
+};
+
+ROUTES[AUTH] = {
+  login: () => "/admin/login",
+};
 
 export {
   ROUTES,
   ADMINISTRATOR,
   FREEPOST,
   LEADS,
+  AUTH,
 };

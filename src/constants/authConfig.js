@@ -1,0 +1,1 @@
+export const TOKEN_DURATION_HOUR = 2;

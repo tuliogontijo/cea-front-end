@@ -1,11 +1,14 @@
-import { Form, Input } from 'antd';
-import { UserOutlined, LockOutlined } from '@ant-design/icons';
+import { useContext } from "react";
+
+import { Form, Input, Spin, Alert } from "antd";
+import { UserOutlined, LockOutlined, LoadingOutlined  } from "@ant-design/icons";
 
 import logo from "../../images/logo.png";
 
 import Button from "../../components/Button";
 
-import { useNavigate } from 'react-router-dom';
+import { Context } from "../../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 import styles from "./styles.module.css";
 
@@ -13,26 +16,40 @@ const { Item } = Form;
 
 const Login = () => {
   const navigate = useNavigate();
+  const { handleLogin, loading, error } = useContext(Context);
 
-  const onFinish = (values) => {
-    console.log('Success:', values);
-    navigate("/leads/listagem");
+  const onFinish = async (values) => {
+    const isPrimaryAccess = await handleLogin(values);
+
+    if (isPrimaryAccess) {
+      return navigate("/recuperacao-senha");
+    }
+
+    return navigate("/leads/listagem");
   };
 
-  const onFinishFailed = (errorInfo) => {
-    console.log('Failed:', errorInfo);
-  };
+  const loadingIcon = <LoadingOutlined className={styles.loadingIcon} spin />;
+
   return (
     <div className={styles.container}>
       <img src={logo} alt="logo" />
       <h1>Painel Administrativo Comunidade Mães de Impacto</h1>
 
+      {error && (
+        <div id="alert-error-auth">
+          <Alert
+            message="Falha na autenticação!"
+            description="Usuário ou senha inválido! Tente novamente mais tarde."
+            type="error"
+            showIcon
+            closable
+          />
+        </div>
+      )}
+
       <Form
-        initialValues={{
-          remember: true,
-        }}
+        initialValues={{ remember: true }}
         onFinish={onFinish}
-        onFinishFailed={onFinishFailed}
         autoComplete="off"
         name="form-auth"
       >
@@ -47,7 +64,9 @@ const Login = () => {
         >
           <Input
             prefix={<UserOutlined />}
-            placeholder="Login" />
+            placeholder="Login"
+            disabled={loading}
+          />
         </Item>
 
         <Item
@@ -61,14 +80,16 @@ const Login = () => {
         >
           <Input.Password
             prefix={<LockOutlined />}
-            placeholder="Senha" />
+            placeholder="Senha"
+            disabled={loading}
+          />
         </Item>
 
         <Button
           type="submit"
           stylesButton={`buttonPrimary ${styles.buttonSubmit}`}
         >
-          Entrar
+          {loading ? (<Spin indicator={loadingIcon} />) : "Entrar"}
         </Button>
       </Form>
     </div>
