@@ -57,8 +57,7 @@ const FreePostList = () => {
         freepost.status = freepost.status ? "online" : "offline";
         freepost.createdAt = format(new Date(freepost.createdAt), "dd/MM/yyyy");
         return null;
-      })
-
+      });
 
       return {
         success: true,
@@ -97,7 +96,6 @@ const FreePostList = () => {
       setOpenModalDelete(false);
     }
   }
-
 
   const navigateFreePostCreator = () => navigate("/conteudo-gratuito/cadastro");
 
@@ -212,7 +210,7 @@ const FreePostList = () => {
         <div className="messageModalDelete">
           <p>Falha ao {messageError?.type}!</p>
 
-          <p>Messagem de erro:</p>
+          <p>Mensagem de erro:</p>
           <p className="modalMessageAlert">{messageError?.text}</p>
         </div>
       </ModalError>

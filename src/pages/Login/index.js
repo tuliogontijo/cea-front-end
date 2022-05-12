@@ -33,7 +33,7 @@ const Login = () => {
   return (
     <div className={styles.container}>
       <img src={logo} alt="logo" />
-      <h1>Painel Administrativo Comunidade Mães de Impacto</h1>
+      <h1>Painel Administrativo Comunidade Entendendo a Adolescência</h1>
 
       {error && (
         <div id="alert-error-auth">

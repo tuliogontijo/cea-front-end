@@ -3,7 +3,7 @@ import AvatarDropdown from "./AvatarDropdown";
 const RightContent = () => {
   return (
     <div className="containerHeader">
-      <p className="titleHeader">Comunidade - Mães de Impacto</p>
+      <p className="titleHeader">Comunidade - Entendendo a Adolescência</p>
       <AvatarDropdown/>
     </div>
   );

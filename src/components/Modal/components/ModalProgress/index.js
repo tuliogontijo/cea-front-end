@@ -1,7 +1,11 @@
-import Modal from "../..";
-import Progress from "../Progress"
-const ModalProgress = ({ title, buttons, visible, onCloseModal, data }) => {
+import { ExclamationCircleOutlined } from "@ant-design/icons";
 
+import Modal from "../..";
+import Progress from "../Progress";
+
+import styles from "./styles.module.css";
+
+const ModalProgress = ({ title, buttons, visible, onCloseModal, data, error }) => {
   return (
     <Modal
       title={title}
@@ -9,7 +13,17 @@ const ModalProgress = ({ title, buttons, visible, onCloseModal, data }) => {
       visible={visible}
       onCloseModal={onCloseModal}
     >
-      <Progress data={data} />
+      {!error && (<Progress data={data} />)}
+
+      {error && (
+        <>
+          <ExclamationCircleOutlined className={styles.iconError} />
+
+          <p className={styles.textError}>
+            Oops... Não foi possível exibir os dados dessa enquete. Tente novamente mais tarde!
+          </p>
+        </>
+      )}
     </Modal>
   );
 }

@@ -1,18 +1,18 @@
-import { Progress as ProgressAntd } from 'antd';
+import { Progress as ProgressAntd } from "antd";
 
+import styles from "./styles.module.css";
 
 const Progress = ({ data }) => {
   return (
     <>
       {data && data.map((topic) => {
-        console.log(topic)
-
         return (
-          <div key={topic.id}>
-            <span>{topic.description}</span>
+          <div key={topic?.id} className={styles.container}>
+            <span>{`${topic?.description} (${topic?.votes})`}</span>
             <ProgressAntd
-              percent={topic.votes}
+              status="normal"
               strokeColor={"#BFB372"}
+              percent={topic?.percentageVotes}
             />
           </div>
         );
