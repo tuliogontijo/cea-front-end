@@ -5,6 +5,7 @@ import { formatFooter } from "./utils/formatFooter";
 import "./styles.less";
 
 const Modal = ({
+  title,
   visible,
   buttons,
   children,
@@ -15,6 +16,7 @@ const Modal = ({
 
   return (
     <ModalAntd
+      title={title}
       centered
       visible={visible}
       destroyOnClose={true}
