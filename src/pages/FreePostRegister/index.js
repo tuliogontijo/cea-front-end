@@ -11,6 +11,8 @@ import ModalSuccess from "../../components/Modal/components/ModalSuccess";
 
 import { formatRoutes } from "./utils/formatRoutes";
 
+import useStore from "../../hooks/useStore";
+
 import { FreepostService } from "../../services";
 
 import styles from "./styles.module.css";
@@ -72,12 +74,15 @@ const FreePostRegister = ({ isEdit }) => {
 
 
   const onSubmit = async (values) => {
+    const { getDataLocalStorage } = useStore();
+    const usernameAdmin = getDataLocalStorage("user")?.username;
+
     const payload = {
       title: values?.title,
       description: values?.description,
       imageUrl: values?.imageUrl,
       status: values?.status ? true : false,
-      user: "admin.cea",
+      user: usernameAdmin,
     };
 
     try {
@@ -253,7 +258,7 @@ const FreePostRegister = ({ isEdit }) => {
         <div className="modalMessage">
           <p>Falha ao {isEdit ? "editar" : "criar"} conteúdo gratuito!</p>
 
-          <p>Messagem de erro:</p>
+          <p>Mensagem de erro:</p>
           <p className="modalMessageAlert">
             {messageError || "Não identificado."}
           </p>

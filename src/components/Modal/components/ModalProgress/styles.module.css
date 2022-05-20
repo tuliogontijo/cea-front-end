@@ -1,0 +1,11 @@
+.textError {
+    font-size: 16px;
+    text-align: center;
+}
+
+.iconError {
+    font-size: 32px;
+    color: #FF4D4F;
+    display: block;
+    margin: 0 auto 24px;
+}

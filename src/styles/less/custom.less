@@ -1,6 +1,5 @@
 .ant-design-pro {
   min-height: 100vh;
-
 }
 
 .ant-pro-global-header {
@@ -109,7 +108,10 @@
 .ant-pro-table-search {
   border-radius: 4px;
   margin-bottom: 32px !important;
+}
 
+.ant-table-wrapper {
+  overflow: auto;
 }
 
 .ant-row .ant-form-item {
@@ -165,14 +167,24 @@
   border-radius: 4px;
 }
 
-#create-administrator-form, #create-freepost-form {
+#create-administrator-form,
+#create-freepost-form,
+#type-exclusive-post-form,
+#create-exclusive-post-content,
+#create-exclusive-post-survey {
   width: 500px;
 }
 
 #create-administrator-form .ant-row,
 #create-administrator-form .ant-form-item
 #create-freepost-form .ant-row,
-#create-freepost-form .ant-form-item
+#create-freepost-form .ant-form-item,
+#type-exclusive-post-form .ant-row,
+#type-exclusive-post-form .ant-form-item,
+#create-exclusive-post-content .ant-row,
+create-exclusive-post-content .ant-form-item,
+#create-exclusive-post-survey .ant-row,
+#create-exclusive-post-survey .ant-form-item
  {
   flex-flow: column wrap;
 }
@@ -237,4 +249,8 @@
       color: #fff;
     }
   }
+}
+
+.anticon .iconMediaDisabled {
+  cursor: not-allowed !important;
 }

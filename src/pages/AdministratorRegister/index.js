@@ -3,6 +3,7 @@ import { Form, Input, PageHeader } from "antd";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
 import { CheckCircleFilled, CloseCircleFilled, SaveOutlined, ImportOutlined } from "@ant-design/icons";
 
+import Loader from "../../components/Loader";
 import Button from "../../components/Button";
 import RouterBreadcrumb from "../../components/RouterBreadcrumb";
 import ModalError from "../../components/Modal/components/ModalError";
@@ -11,10 +12,11 @@ import ModalSuccess from "../../components/Modal/components/ModalSuccess";
 import { formatRoutes } from "./utils/formatRoutes";
 import { validateUsername } from "./utils/validateUsername";
 
+import useStore from "../../hooks/useStore";
+
 import { AdministratorService } from "../../services";
 
 import styles from "./styles.module.css";
-import Loader from "../../components/Loader";
 
 const { Item } = Form;
 
@@ -80,10 +82,13 @@ const AdministratorRegister = ({ isEdit }) => {
   const handleCloseModalError = () => setModalError(false);
 
   const onSubmit = async (values) => {
+    const { getDataLocalStorage } = useStore();
+    const usernameAdmin = getDataLocalStorage("user")?.username;
+
     const payload = {
       name: values?.name,
       username: values?.username,
-      user: "admin.cea",
+      user: usernameAdmin,
     };
     
     try {

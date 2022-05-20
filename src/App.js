@@ -6,8 +6,10 @@ import PrivateRoute from "./components/PrivateRoute";
 import Login from "./pages/Login";
 import LeadsList from "./pages/LeadsList";
 import FreePostList from "./pages/FreePostList";
+import FreePostRegister from "./pages/FreePostRegister";
+import ExclusivePostList from "./pages/ExclusivePostList";
+import ExclusivePostRegister from "./pages/ExclusivePostRegister";
 import AdministratorList from "./pages/AdministratorList";
-import FreePostListRegister from "./pages/FreePostRegister";
 import AdministratorRegister from "./pages/AdministratorRegister";
 
 import "./styles/less/common.less";
@@ -56,7 +58,7 @@ function App() {
           <Route
             element={(
               <PrivateRoute>
-                <FreePostListRegister />
+                <FreePostRegister />
               </PrivateRoute>
             )}
             path="/conteudo-gratuito/cadastro"
@@ -65,10 +67,37 @@ function App() {
           <Route
             element={(
               <PrivateRoute>
-                <FreePostListRegister isEdit />
+                <FreePostRegister isEdit />
               </PrivateRoute>
             )}
             path="/conteudo-gratuito/edicao/:id"
+          />
+
+          <Route
+            element={(
+              <PrivateRoute>
+                <ExclusivePostList />
+              </PrivateRoute>
+            )}
+            path="/conteudo-exclusivo/listagem"
+          />
+
+          <Route
+            element={(
+              <PrivateRoute>
+                <ExclusivePostRegister />
+              </PrivateRoute>
+            )}
+            path="/conteudo-exclusivo/cadastro"
+          />
+
+          <Route
+            element={(
+              <PrivateRoute>
+                <ExclusivePostRegister isEdit />
+              </PrivateRoute>
+            )}
+            path="/conteudo-exclusivo/edicao/:id"
           />
 
           <Route
