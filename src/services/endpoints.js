@@ -5,6 +5,7 @@ const FREEPOST = "Freepost";
 const LEADS = "Leads";
 const AUTH = "Auth";
 const EXCLUSIVEPOST = "Exclusivepost";
+const STUDENTS = "Students";
 
 const ROUTES = [];
 
@@ -13,6 +14,8 @@ ROUTES[ADMINISTRATOR] = {
   create: () => "/admin/administrators/",
   update: (id) => `/admin/administrators/${id}`,
   delete: (id) => `/admin/administrators/${id}`,
+  generatePassword: () => '/admin/administrators/password/generate',
+  createPassword: () => '/admin/administrators/password/create',
 };
 
 ROUTES[FREEPOST] = {
@@ -42,6 +45,12 @@ ROUTES[EXCLUSIVEPOST] = {
   editSurvey: (id) => `/admin/exclusive-posts/survey/${id}`,
 }
 
+ROUTES[STUDENTS] = {
+  listPerPage: (queries) => `/admin/students/?${formatQuery(queries)}`,
+  importStudents: () => '/admin/students/upload',
+  updateName: (id) => `/admin/students/${id}`,
+}
+
 export {
   ROUTES,
   ADMINISTRATOR,
@@ -49,4 +58,5 @@ export {
   LEADS,
   AUTH,
   EXCLUSIVEPOST,
+  STUDENTS,
 };

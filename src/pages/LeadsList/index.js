@@ -120,7 +120,7 @@ const LeadsList = () => {
         <div className="messageModalDelete">
           <p>Falha ao {messageError?.type}!</p>
 
-          <p>Messagem de erro:</p>
+          <p>Mensagem de erro:</p>
           <p className="modalMessageAlert">{messageError?.text}</p>
         </div>
       </ModalError>

@@ -1,4 +1,4 @@
-import { ProfileOutlined, FormOutlined, TableOutlined, FileTextOutlined } from "@ant-design/icons";
+import { ProfileOutlined, FormOutlined, TableOutlined, FileTextOutlined, UserOutlined } from "@ant-design/icons";
 
 export const ROUTE = {
   path: "/",
@@ -44,6 +44,16 @@ export const ROUTE = {
           name: "Cadastro",
           path: "/conteudo-exclusivo/cadastro"
         }
+      ]
+    },
+    {
+      name: "Alunos",
+      icon: <UserOutlined />,
+      routes: [
+        {
+          name: "Listagem",
+          path: "/students/listagem"
+        },
       ]
     },
     {

@@ -233,7 +233,7 @@ const AdministratorRegister = ({ isEdit }) => {
         <div className="modalMessage">
           <p>Falha ao {isEdit ? "editar" : "criar"} administrador!</p>
 
-          <p>Messagem de erro:</p>
+          <p>Mensagem de erro:</p>
           <p className="modalMessageAlert">
             {messageError || "Não identificado."}
           </p>

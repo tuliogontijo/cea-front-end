@@ -61,8 +61,6 @@ const AuthProvider = ({ children }) => {
       };
 
       setDataLocalStorage("user", persistData);
-
-      return isPrimaryAccess;
     } catch (e) {
       setError(true);
     } finally {

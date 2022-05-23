@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 
 import { Form, Input, Spin, Alert } from "antd";
 import { UserOutlined, LockOutlined, LoadingOutlined  } from "@ant-design/icons";
@@ -16,16 +16,28 @@ const { Item } = Form;
 
 const Login = () => {
   const navigate = useNavigate();
-  const { handleLogin, loading, error } = useContext(Context);
+  const { handleLogin, loading, error, validateSession, handleLogout } = useContext(Context);
+
+  useEffect(() => {
+    const { authenticated, isPrimaryAccess } = validateSession();
+
+    if (authenticated && !isPrimaryAccess) {
+      return navigate("/administradores/listagem");
+    }
+
+    handleLogout();
+  }, []);
 
   const onFinish = async (values) => {
-    const isPrimaryAccess = await handleLogin(values);
+    await handleLogin(values);
+
+    const { isPrimaryAccess } = validateSession();
 
     if (isPrimaryAccess) {
       return navigate("/recuperacao-senha");
     }
 
-    return navigate("/leads/listagem");
+    return navigate("/administradores/listagem");
   };
 
   const loadingIcon = <LoadingOutlined className={styles.loadingIcon} spin />;

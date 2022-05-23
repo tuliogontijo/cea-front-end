@@ -2,18 +2,24 @@ import { ceaAPI } from "../axios";
 import { ROUTES, ADMINISTRATOR } from "../endpoints";
 
 const Administrator = {
-  listPerPage: async (query) => {
-    return await ceaAPI.get(ROUTES[ADMINISTRATOR].listPerPage(query));
+  listPerPage: (query) => {
+    return ceaAPI.get(ROUTES[ADMINISTRATOR].listPerPage(query));
   },
-  create: async (payload) => {
-    return await ceaAPI.post(ROUTES[ADMINISTRATOR].create(), payload);
+  create: (payload) => {
+    return ceaAPI.post(ROUTES[ADMINISTRATOR].create(), payload);
   },
-  update: async (payload, id) => {
-    return await ceaAPI.put(ROUTES[ADMINISTRATOR].update(id), payload);
+  update: (payload, id) => {
+    return ceaAPI.put(ROUTES[ADMINISTRATOR].update(id), payload);
   },
-  delete: async (id) => {
-    return await ceaAPI.delete(ROUTES[ADMINISTRATOR].delete(id));
-  }
+  delete: (id) => {
+    return ceaAPI.delete(ROUTES[ADMINISTRATOR].delete(id));
+  },
+  generatePassword: (payload) => {
+    return ceaAPI.post(ROUTES[ADMINISTRATOR].generatePassword(), payload);
+  },
+  createPassword: (payload) => {
+    return ceaAPI.post(ROUTES[ADMINISTRATOR].createPassword(), payload);
+  },
 };
 
 export default Administrator;

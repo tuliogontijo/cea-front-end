@@ -1,0 +1,38 @@
+.container {
+    width: 100%;
+}
+
+.container table {
+    width: 100%;
+    border-radius: 4px;
+    background-color: #E5E5E5;
+}
+
+.container table td, .container table th {
+    padding: 8px 12px;
+    overflow-x: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    max-width: 200px;
+}
+
+.columnMessage {
+    width: 20%;
+    text-align: center;
+}
+
+.columnMessage svg {
+    font-size: 18px;
+}
+
+.columnMessage:hover {
+    cursor: pointer;
+}
+
+.iconError {
+    color: #FF4D4F;
+}
+
+.iconSuccess {
+    color: #018942;
+}
