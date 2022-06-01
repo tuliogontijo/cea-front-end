@@ -1,39 +1,37 @@
+import { ExclamationCircleOutlined } from "@ant-design/icons";
+
 import Modal from "../..";
 import Replies from "../Replies"
 
-const ModalComments = ({ buttons, visible, title, onCloseModal, data }) => {
+import styles from "./styles.module.css";
 
-  const data = [
-    {
-      id: "1",
-      student: "Murillo",
-      replies: "quer um halls?"
-    },
-    {
-      id: "2",
-      student: "Tulio",
-      replies: "Ficou lindo, menino"
-    },
-    {
-      id: "3",
-      student: "Gustavo",
-      replies: "Me ajuda!?"
-    },
-    ]
+const ModalComments = ({ buttons, visible, title, onCloseModal, data, error }) => {
+
   return (
 
     <Modal
+      title={title}
       buttons={buttons}
       visible={visible}
-      title={title}
       onCloseModal={onCloseModal}
       data={data}
     >
-      <div>
-        <span>{student} &nbsp; {text}</span>
-          <h1 className="commentsTitle">Respostas ao comentário:</h1>
-          <Replies data={data}/>
-      </div>
+      {!error && (
+        <>
+          <h2 className="">Respostas ao comentário:</h2>
+          <Replies data={data} />
+        </>
+      )}
+      {error && (
+        <>
+          <ExclamationCircleOutlined className={styles.iconError} />
+
+          <p className={styles.textError}>
+            Oops... Não foi possível exibir os comentários. Tente novamente mais tarde!
+          </p>
+        </>
+      )}
+
     </Modal>
   )
 }
