@@ -186,3 +186,7 @@ body {
   color: #FAAD14;
   margin-right: 8px;
 }
+
+.hidden {
+  display: none;
+}
