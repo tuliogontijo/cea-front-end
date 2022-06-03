@@ -36,6 +36,17 @@ export const ROUTE = {
         },
       ]
     },
+    ,
+    {
+      name: "Conteúdo Exclusivo",
+      icon: <FileTextOutlined />,
+      routes: [
+        {
+          name: "Comentários",
+          path: "/conteudo-exclusivo/comentarios"
+        }
+      ]
+    },
     {
       name: "Conteúdo Exclusivo",
       icon: <FileTextOutlined />,
