@@ -9,11 +9,13 @@ export const ROUTE = {
       icon: <FormOutlined />,
       routes: [
         {
-          name: "Listagem",
-          path: "/administradores/listagem"
+          name: "CEA | Administradores | Listagem",
+          menuName: "Listagem",
+          path: "/administradores/listagem",
         },
         {
-          name: "Cadastro",
+          name: "CEA | Administradores | Cadastro",
+          menuName: "Cadastro",
           path: "/administradores/cadastro"
         },
       ]
@@ -23,11 +25,13 @@ export const ROUTE = {
       icon: <TableOutlined />,
       routes: [
         {
-          name: "Listagem",
+          name: "CEA | Conteúdo Gratuito | Listagem",
+          menuName: "Listagem",
           path: "/conteudo-gratuito/listagem"
         },
         {
-          name: "Cadastro",
+          name: "CEA | Conteúdo Gratuito | Cadastro",
+          menuName: "Cadastro",
           path: "/conteudo-gratuito/cadastro"
         },
       ]
@@ -37,11 +41,13 @@ export const ROUTE = {
       icon: <FileTextOutlined />,
       routes: [
         {
-          name: "Listagem",
-          path: "conteudo-exclusivo/listagem"
+          name: "CEA | Conteúdo Exclusivo | Listagem",
+          menuName: "Listagem",
+          path: "/conteudo-exclusivo/listagem"
         },
         {
-          name: "Cadastro",
+          name: "CEA | Conteúdo Exclusivo | Cadastro",
+          menuName: "Cadastro",
           path: "/conteudo-exclusivo/cadastro"
         }
       ]
@@ -51,8 +57,9 @@ export const ROUTE = {
       icon: <UserOutlined />,
       routes: [
         {
-          name: "Listagem",
-          path: "/students/listagem"
+          name: "CEA | Alunos | Listagem",
+          menuName: "Listagem",
+          path: "/alunos/listagem"
         },
       ]
     },
@@ -61,7 +68,8 @@ export const ROUTE = {
       icon: <ProfileOutlined />,
       routes: [
         {
-          name: "Listagem",
+          name: "CEA | Leads | Listagem",
+          menuName: "Listagem",
           path: "/leads/listagem"
         },
       ]

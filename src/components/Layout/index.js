@@ -22,7 +22,7 @@ const Layout = ({ children }) => {
       defaultDOM
     ) : (
       <a href={menuItemProps.path || "/"} onClick={handleClickItem}>
-        {defaultDOM}
+        {menuItemProps.menuName}
       </a>
     );
   };
