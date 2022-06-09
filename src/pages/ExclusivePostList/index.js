@@ -90,9 +90,9 @@ const ExclusivePostList = () => {
 
     try {
       const { data: {
-       pollTopics,
-       totalVotes
-      }} = await ExclusivePostService.findPollTopics(id);
+        pollTopics,
+        totalVotes
+      } } = await ExclusivePostService.findPollTopics(id);
 
       setTitleSurveySelected(`${title} (${totalVotes})`);
       setDataSurveySelected(pollTopics);
@@ -128,7 +128,7 @@ const ExclusivePostList = () => {
   }
 
   const handleEdit = (record) => {
-    navigate(`/conteudo-exclusivo/edicao/${record.id}`, { state: { record }});
+    navigate(`/conteudo-exclusivo/edicao/${record.id}`, { state: { record } });
   }
 
   const handleDetailsSurvey = async (id, title) => {
@@ -136,7 +136,8 @@ const ExclusivePostList = () => {
   }
 
   const handleDetailsContent = async () => {
-    console.log("Detalhes de comentários");
+    navigate(`/conteudo-exclusivo/comentarios`, {});
+    //console.log("Detalhes de comentários");
   }
 
   const handleCloseModalProgress = () => {

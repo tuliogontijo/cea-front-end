@@ -14,10 +14,10 @@ import FreePostRegister from "./pages/FreePostRegister";
 
 import ExclusivePostList from "./pages/ExclusivePostList";
 import ExclusivePostRegister from "./pages/ExclusivePostRegister";
+import ExclusivePostComments from "./pages/ExclusivePostComments";
 
 import AdministratorList from "./pages/AdministratorList";
 import AdministratorRegister from "./pages/AdministratorRegister";
-import ExclusivePostComments from "./pages/ExclusivePostComments";
 
 import "./styles/less/common.less";
 

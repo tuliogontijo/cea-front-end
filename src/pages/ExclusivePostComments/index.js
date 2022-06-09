@@ -65,7 +65,7 @@ const ExclusivePostComments = () => {
   const routes = [
     {
       active: false,
-      path: "/comments",
+      path: "/conteudo-exclusivo",
       breadcrumbName: "Conteúdo Exclusivo"
     },
     {
