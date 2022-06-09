@@ -20,10 +20,10 @@ const Replies = ({ data }) => {
               <ButtonFooter
                 stylesButton={styles.buttonArchive}
                 text={"Arquivar"}
-              // handleClick={handleClick}
+                handleClick={()=>handleArchive}
               >
               </ButtonFooter>
-              &nbsp; <span className={styles.createdAtText}>Publicado em {createdAt}</span>
+              <span className={styles.createdAtText}>Publicado em {createdAt}</span>
             </div>
           </div>
         );

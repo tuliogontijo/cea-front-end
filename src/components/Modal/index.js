@@ -10,6 +10,7 @@ const Modal = ({
   buttons,
   children,
   onCloseModal,
+  width
 }) => {
 
   const footerButtons = formatFooter(buttons);
@@ -17,11 +18,12 @@ const Modal = ({
   return (
     <ModalAntd
       centered
-      title={title}
+      title = {title}
       visible={visible}
       destroyOnClose={true}
       footer={footerButtons}
       onCancel={onCloseModal}
+      width={width}
     >
       <div className="content-modal">
         {children}

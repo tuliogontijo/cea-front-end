@@ -1,12 +1,36 @@
-import styles from "./styles.module.css";
+import { useState } from "react";
 import RouterBreadcrumb from "../../components/RouterBreadcrumb";
-import { Input, PageHeader } from "antd";
+import { Input, PageHeader, Pagination } from "antd";
+
 import Comments from "../../components/Comments"
-import Pagination from "../../components/Pagination"
+import ModalRepliesView from "../../components/Modal/components/ModalRepliesView";
+import ModalReply from "../../components/Modal/components/ModalReply";
 
 
+import styles from "./styles.module.css";
 
 const ExclusivePostComments = () => {
+
+  const [loading, setLoading] = useState(false);
+  const [modalError, setModalError] = useState(false);
+  const [messageError, setMessageError] = useState({});
+  const [modalReply, setModalReply] = useState(false);
+  const [modalRepliesView, setModalRepliesView] = useState(true);
+  const [modalRepliesViewError, setModalRepliesViewError] = useState(false);
+
+
+  const handleCloseModalReply = (id) => {
+    setModalReply(trfalseue);
+  }
+  const handleCloseModalRepliesView = async () => {
+    setModalRepliesView(false);
+    console.log("Status = " + modalRepliesView)
+  }
+  const handleArchive = (id) => {
+    //arquivar comentário
+    console.log("Comentário arquivado. " + id)
+  }
+
   const data = [
 
     {
@@ -34,6 +58,9 @@ const ExclusivePostComments = () => {
       createdAt: "2022-04-30T22:30:00.154246"
     },
   ]
+  const titulo = data[0].student + " " + data[0].replies;
+
+
 
   const routes = [
     {
@@ -48,27 +75,65 @@ const ExclusivePostComments = () => {
     }
   ];
 
+  const buttons = [
+    {
+
+      text: "Arquivar",
+      styles: "buttonsModalDelete",
+      handleClick: handleArchive
+    },
+    {
+      text: "Fechar",
+      styles: "buttonDefault",
+      handleClick: handleCloseModalRepliesView
+    },
+  ]
+
   return (
     <div>
       <PageHeader
-        title={"Comentários de Conteúdo Exclusivo"}
+        title={"Comentários do Conteúdo Exclusivo"}
         breadcrumbRender={() => <RouterBreadcrumb routes={routes} />}
       />
       <div className={styles.containerComments}>
 
+        <span> <h1> Entendendo a Adolescência (titulo do conteúdo exclusivo)</h1></span>
         <Comments
           data={data}
-        ></Comments>
+        />
+
         <Pagination
-        total={1}
-        // hideOnSinglePage={true}
-        pageSize={1}
-        >
-        </Pagination>
-  
+          total={15}
+          showTotal={(total, range) => `${range[0]}-${range[1]} of ${total} items`}
+          defaultPageSize={2}
+          defaultCurrent={1}
+        />
+
       </div>
 
+      <ModalRepliesView
+        width={1000}
+        data={data}
+        title={titulo}
+        visible={modalRepliesView}
+        error={modalRepliesViewError}
+        handleClick={handleArchive(data[0].id)}
+        className={styles.modalRepliesConteiner}
+        buttons={buttons}
+      />
+      {/* <ModalReply
+        data={data}
+        title={"Responder ao comentário:"}
+        visible={modalReply}
+        error={modalRepliesViewError}
+        handleClick={handleArchive(data[0].id)}
+        buttons={[{
+          text: "Fechar",
+          styles: "buttonDefault",
+          handleClick: handleCloseModalReply
+        }]}
+      /> */}
     </div>
-  )
+  );
 }
 export default ExclusivePostComments;
