@@ -2,7 +2,7 @@ import { ExclamationCircleOutlined } from "@ant-design/icons";
 
 import Modal from "../..";
 
-// import styles from "./styles.module.css";
+import styles from "./styles.module.css";
 
 const ModalError = ({ buttons, visible, onCloseModal, children }) => {
   return (
@@ -11,7 +11,7 @@ const ModalError = ({ buttons, visible, onCloseModal, children }) => {
       visible={visible}
       onCloseModal={onCloseModal}
     >
-      <div /*className={styles.iconError}*/>
+      <div className={styles.iconError}>
         <ExclamationCircleOutlined />
       </div>
 

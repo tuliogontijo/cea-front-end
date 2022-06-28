@@ -1,12 +1,38 @@
 .containerComments {
   margin: 32px 24px;
-  padding: 64px 32px;
-  display: inline-block;
-  justify-content: center;
+  padding: 32px;
   background-color: #fff;
+  border-radius: 4px;
 }
 
-.pagination{
-  text-align: center !important;
+.paginationContainer {
+  padding-bottom: 16px;
 }
 
+.postTitle {
+  position: sticky;
+  top: 48px;
+  background-color: #fff;
+  box-shadow: 0px 2px 8px lightgrey;
+  width: calc(100vw - 273px);
+  margin: -32px 0px 24px -32px;
+  padding: 24px 32px;
+  border-radius: 4px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.authorTitleModalView {
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.textTitleModalView {
+  font-size: 12px;
+}
+
+.buttonBack {
+  display: block;
+  margin: auto;
+  margin-top: 24px;
+}

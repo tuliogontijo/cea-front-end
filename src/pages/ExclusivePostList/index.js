@@ -135,9 +135,8 @@ const ExclusivePostList = () => {
     await getPollTopics(id, title);
   }
 
-  const handleDetailsContent = async () => {
-    navigate(`/conteudo-exclusivo/comentarios`, {});
-    //console.log("Detalhes de comentários");
+  const handleDetailsContent = async (id, title) => {
+    navigate(`/conteudo-exclusivo/comentarios`, { state: { id, title } });
   }
 
   const handleCloseModalProgress = () => {

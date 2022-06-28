@@ -1,0 +1,15 @@
+.buttonFooter {
+  font-size: 12px;
+  padding: 0px !important;
+  margin-right: 16px;
+  margin-top: 8px;
+}
+
+.studentName {
+  font-weight: bolder;
+  margin-right: 16px !important;
+}
+
+.createdAtText {
+  font-size: 12px;
+}
