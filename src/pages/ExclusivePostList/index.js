@@ -52,7 +52,7 @@ const ExclusivePostList = () => {
 
   const getData = async ({ current, pageSize, title, status, type }) => {
     const query = {
-      direction: "ASC",
+      direction: "DESC",
       page: current - 1,
       orderBy: "createdAt",
       linesPerPage: pageSize
