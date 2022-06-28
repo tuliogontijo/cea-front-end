@@ -10,6 +10,9 @@ const Modal = ({
   buttons,
   children,
   onCloseModal,
+  bodyStyle,
+  style,
+  width
 }) => {
 
   const footerButtons = formatFooter(buttons);
@@ -22,6 +25,9 @@ const Modal = ({
       destroyOnClose={true}
       footer={footerButtons}
       onCancel={onCloseModal}
+      width={width}
+      style={style}
+      bodyStyle={bodyStyle}
     >
       <div className="content-modal">
         {children}
