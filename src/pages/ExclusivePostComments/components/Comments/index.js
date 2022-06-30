@@ -8,14 +8,17 @@ import styles from "./styles.module.css";
 const Comments = ({
   data,
   handleOpenModalReplies,
-  handleFileComment
+  handleFileComment,
+  isActive
 }) => {
+
 
   return (
     <>
-      {data.map((comment) => {
+      {data?.map((comment) => {
 
         const createdAt = moment(comment?.createdAt).format("DD/MM/YYYY [ às ] HH:mm");
+        const totalReplies = comment.totalCommentsReply;
 
         return (
 
@@ -24,10 +27,12 @@ const Comments = ({
             <span> {comment.text} </span>
             <div className={styles.containerButton}>
 
-              {comment.totalCommentsReply > 0 && <Button
+              {(isActive || totalReplies > 0) && <Button
                 stylesButton={styles.buttonFooter}
                 handleClick={() => handleOpenModalReplies(comment)}
-              >Ver Respostas ({comment.totalCommentsReply})</Button>}
+              >{totalReplies > 0 ? `Ver Respostas (${totalReplies})` : "Responder"}
+              </Button>}
+
 
               <Button
                 stylesButton={styles.buttonFooter}
@@ -39,7 +44,7 @@ const Comments = ({
               <span className={styles.createdAtText}>Publicado em {createdAt}</span>
 
             </div>
-            <Divider />
+            <Divider className={styles.divider} />
           </div>
         );
       })}

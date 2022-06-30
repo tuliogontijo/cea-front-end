@@ -104,7 +104,7 @@ const FormContent = ({ isEdit, stateEdit, id }) => {
     setLoading(true);
     try {
       const { data } = await ExclusivePostService.findMedia(id);
-      setMedia(data);
+      setMedia(data ? data : []);
     } catch (e) {
       setErrorGetMedia(true);
     } finally {
@@ -164,7 +164,7 @@ const FormContent = ({ isEdit, stateEdit, id }) => {
           required
           name="title"
           label="Título"
-          rules={[ requiredRule ]}
+          rules={[requiredRule]}
         >
           <Input placeholder="Digite um título" />
         </Item>
@@ -173,7 +173,7 @@ const FormContent = ({ isEdit, stateEdit, id }) => {
           required
           name="description"
           label="Descrição"
-          rules={[ requiredRule ]}
+          rules={[requiredRule]}
         >
           <TextArea
             rows={4}

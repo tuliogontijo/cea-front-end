@@ -51,12 +51,13 @@ const AuthProvider = ({ children }) => {
       setLoading(true);
       const { data } = await AuthService.login(payload);
 
-      const { accessToken, isPrimaryAccess } = data;
+      const { accessToken, isPrimaryAccess, userId } = data;
 
       const persistData = {
         isPrimaryAccess,
         token: accessToken,
         username: payload.username,
+        userId,
         expiresAt: moment().add(TOKEN_DURATION_HOUR, 'hours'),
       };
 

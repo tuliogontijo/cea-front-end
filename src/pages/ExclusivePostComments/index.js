@@ -1,178 +1,142 @@
 import { useState, useEffect } from "react";
-import { PageHeader, Pagination } from "antd";
+import { Badge, PageHeader, Pagination } from "antd";
 import { useLocation, useNavigate } from "react-router-dom";
 import { ExclamationCircleOutlined } from "@ant-design/icons";
 
+import useStore from "../../hooks/useStore";
 import RouterBreadcrumb from "../../components/RouterBreadcrumb";
 import Button from "../../components/Button";
 import EmptyState from "../../components/EmptyState";
 import Loader from "../../components/Loader";
 import Modal from "../../components/Modal";
+import ModalError from "../../components/Modal/components/ModalError";
 
 import Comments from "./components/Comments"
 import ModalRepliesView from "./components/ModalRepliesView";
-import ModalInputComment from "./components/ModalInputComment";
+
+import { CommentsService } from "../../services";
 
 import styles from "./styles.module.css";
-
-const MockComments = {
-  "content": [
-    {
-      "authorId": 1,
-      "authorName": "Tulio Gontijo",
-      "createdAt": "2022-06-17T12:48:02.316Z",
-      "id": 1,
-      "socialName": "",
-      "text": "Mussum Ipsum, cacilds vidis litro abertis. Mauris nec dolor in eros commodo tempor. Aenean aliquam molestie leo, vitae iaculis nisl.Admodum accumsan disputationi eu sit. Vide electram sadipscing et per.Sapien in monti palavris qui num significa nadis i pareci latim.Paisis, filhis, espiritis santis.",
-      "totalCommentsReply": 3
-    },
-    {
-      "authorId": 2,
-      "authorName": "Murillo Isidoro",
-      "createdAt": "2022-06-17T12:48:02.316Z",
-      "id": 2,
-      "socialName": "",
-      "text": "Tá deprimidis, eu conheço uma cachacis que pode alegrar sua vidis.Vehicula non. Ut sed ex eros. Vivamus sit amet nibh non tellus tristique interdum.Cevadis im ampola pa arma uma pindureta.Praesent vel viverra nisi. Mauris aliquet nunc non turpis scelerisque, eget.",
-      "totalCommentsReply": 2
-    },
-    {
-      "authorId": 3,
-      "authorName": "Cristina Kochmann",
-      "createdAt": "2022-06-17T12:48:02.316Z",
-      "id": 3,
-      "socialName": "",
-      "text": "Quem manda na minha terra sou euzis!Copo furadis é disculpa de bebadis, arcu quam euismod magna.Não sou faixa preta cumpadi, sou preto inteiris, inteiris.Praesent vel viverra nisi. Mauris aliquet nunc non turpis scelerisque, eget.",
-      "totalCommentsReply": 0
-    },
-    {
-      "authorId": 4,
-      "authorName": "Gustavo Dutra",
-      "createdAt": "2022-06-17T12:48:02.316Z",
-      "id": 4,
-      "socialName": "",
-      "text": "Paisis, filhis, espiritis santis.Aenean aliquam molestie leo, vitae iaculis nisl.Todo mundo vê os porris que eu tomo, mas ninguém vê os tombis que eu levo!Nullam volutpat risus nec leo commodo, ut interdum diam laoreet. Sed non consequat odio.",
-      "totalCommentsReply": 1
-    },
-    {
-      "authorId": 4,
-      "authorName": "Gustavo Dutra",
-      "createdAt": "2022-06-17T12:48:02.316Z",
-      "id": 5,
-      "socialName": "",
-      "text": "Paisis, filhis, espiritis santis.Aenean aliquam molestie leo, vitae iaculis nisl.Todo mundo vê os porris que eu tomo, mas ninguém vê os tombis que eu levo!Nullam volutpat risus nec leo commodo, ut interdum diam laoreet. Sed non consequat odio.",
-      "totalCommentsReply": 1
-    },
-    {
-      "authorId": 4,
-      "authorName": "Gustavo Dutra",
-      "createdAt": "2022-06-17T12:48:02.316Z",
-      "id": 6,
-      "socialName": "",
-      "text": "Paisis, filhis, espiritis santis.Aenean aliquam molestie leo, vitae iaculis nisl.Todo mundo vê os porris que eu tomo, mas ninguém vê os tombis que eu levo!Nullam volutpat risus nec leo commodo, ut interdum diam laoreet. Sed non consequat odio.",
-      "totalCommentsReply": 1
-    }
-  ],
-  "size": 5,
-  "totalElements": 6,
-  "totalPages": 2
-}
-
-const MockReplies = {
-  "content": [
-    {
-      "authorId": 1,
-      "authorName": "Tulio Gontijo",
-      "createdAt": "2022-06-17T12:48:02.316Z",
-      "id": 1,
-      "socialName": "",
-      "text": "Mussum Ipsum, cacilds vidis litro abertis. Mauris nec dolor in eros commodo tempor. Aenean aliquam molestie leo, vitae iaculis nisl.Admodum accumsan disputationi eu sit. Vide electram sadipscing et per.Sapien in monti palavris qui num significa nadis i pareci latim.Paisis, filhis, espiritis santis.",
-      "totalCommentsReply": 3
-    },
-    {
-      "authorId": 2,
-      "authorName": "Murillo Isidoro",
-      "createdAt": "2022-06-17T12:48:02.316Z",
-      "id": 2,
-      "socialName": "",
-      "text": "Tá deprimidis, eu conheço uma cachacis que pode alegrar sua vidis.Vehicula non. Ut sed ex eros. Vivamus sit amet nibh non tellus tristique interdum.Cevadis im ampola pa arma uma pindureta.Praesent vel viverra nisi. Mauris aliquet nunc non turpis scelerisque, eget.",
-      "totalCommentsReply": 2
-    },
-    {
-      "authorId": 3,
-      "authorName": "Cristina Kochmann",
-      "createdAt": "2022-06-17T12:48:02.316Z",
-      "id": 3,
-      "socialName": "",
-      "text": "Quem manda na minha terra sou euzis!Copo furadis é disculpa de bebadis, arcu quam euismod magna.Não sou faixa preta cumpadi, sou preto inteiris, inteiris.Praesent vel viverra nisi. Mauris aliquet nunc non turpis scelerisque, eget.",
-      "totalCommentsReply": 0
-    },
-    {
-      "authorId": 4,
-      "authorName": "Gustavo Dutra",
-      "createdAt": "2022-06-17T12:48:02.316Z",
-      "id": 4,
-      "socialName": "",
-      "text": "Paisis, filhis, espiritis santis.Aenean aliquam molestie leo, vitae iaculis nisl.Todo mundo vê os porris que eu tomo, mas ninguém vê os tombis que eu levo!Nullam volutpat risus nec leo commodo, ut interdum diam laoreet. Sed non consequat odio.",
-      "totalCommentsReply": 1
-    }
-  ],
-  "size": 5,
-  "totalElements": 4,
-  "totalPages": 1
-}
 
 const ExclusivePostComments = () => {
 
   const navigate = useNavigate();
   const { state } = useLocation();
-  const { id, title } = state;
+  const { id: postId, title, status } = state;
+  const postStatus = status === "active" ? true : false;
 
   const [commentsData, setCommentsData] = useState();
   const [modalReplies, setModalReplies] = useState(false);
   const [repliesData, setRepliesData] = useState();
-  const [modalInputComment, setModalInputComment] = useState(false);
   const [commentSelected, setCommentSelected] = useState();
-  const [modalError, setModalError] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState("");
   const [modalConfirmFile, setModalConfirmFile] = useState(false);
   const [dataToFile, setDataToFile] = useState();
-  // const [messageError, setMessageError] = useState({});
+  const [currentPageComments, setCurrentPageComments] = useState(1);
+  const [modalError, setModalError] = useState(false);
+  const [messageError, setMessageError] = useState("");
+
+  const { getDataLocalStorage } = useStore();
+  const userId = getDataLocalStorage("user")?.userId;
 
   const getCommentsData = async () => {
-    // TODO: listar comentários
-    return MockComments;
+    const query = {
+      page: currentPageComments - 1
+    }
+
+    const { data } = await CommentsService.listCommentsPerPage(query, postId)
+
+    return data;
+  }
+
+  const updateComments = async () => {
+    setIsLoading("comments")
+    try {
+      const data = await getCommentsData();
+      setCommentsData(data);
+    } catch (e) {
+      setMessageError({
+        type: "carregar os comentários",
+        text: "Erro inesperado. Tente novamente mais tarde!"
+      })
+      setModalError(true);
+    } finally {
+      setIsLoading("");
+    }
   }
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    (async () => {
-      try {
-        const data = await getCommentsData();
-        setCommentsData(data);
-      } catch (e) {
-        setModalError(true);
-      } finally {
-        setIsLoading(false)
-      }
-    })()
-  }, [])
+    updateComments();
+  }, [currentPageComments])
 
-  const getRepliesData = async () => {
-    // TODO: listar respostas
-    return MockReplies;
+  const handleChangePageReplies = async (page) => {
+    setIsLoading(true)
+    try {
+      const data = await getRepliesData({ currentPage: page });
+      setRepliesData(data);
+    }
+    catch (e) {
+      setMessageError({
+        type: "carregar as respostas de comentários",
+        text: "Erro inesperado. Tente novamente mais tarde!"
+      })
+      setModalError(true)
+    }
+    finally {
+      setIsLoading(false)
+    }
   }
-  const handleOpenModalReplies = async (commentClicked) => {
+
+  const getRepliesData = async ({ currentPage = 1, commentId = commentSelected.id }) => {
+    const query = {
+      page: currentPage - 1
+    }
+
+    const { data } = await CommentsService.listRepliesPerPage(query, commentId)
+
+    return data;
+  }
+
+  const handleOpenModalReplies = async (commentClicked = commentSelected) => {
     setCommentSelected(commentClicked);
     setIsLoading(true)
     try {
-      const data = await getRepliesData();
+      const data = await getRepliesData({ commentId: commentClicked.id });
       setRepliesData(data);
       setModalReplies(true)
     }
     catch (e) {
+      setMessageError({
+        type: "carregar as respostas de comentários",
+        text: "Erro inesperado. Tente novamente mais tarde!"
+      })
       setModalError(true)
     }
     finally {
+      setIsLoading(false)
+    }
+  }
+
+  const handleSendReply = async (commentId, replyText) => {
+    setIsLoading(true)
+
+    const payload = {
+      commentId,
+      text: replyText,
+      userId
+    }
+
+    try {
+      await CommentsService.createReply(payload)
+    } catch (e) {
+      setMessageError({
+        type: "responder comentário",
+        text: "Erro inesperado. Tente novamente mais tarde!"
+      })
+      setModalError(true)
+    } finally {
+      await handleOpenModalReplies();
       setIsLoading(false)
     }
   }
@@ -182,36 +146,45 @@ const ExclusivePostComments = () => {
     setModalConfirmFile(true)
   }
 
-  const handleFile = () => {
-    //TODO: arquivar comentário
-    const { type, id } = dataToFile;
+  const handleFile = async () => {
     setIsLoading(true)
+    const { type, id } = dataToFile;
+    const payload = { userId }
+    type === "comment" ? payload.commentId = id : payload.commentReplyId = id;
+
     try {
-      if (type === "comment") console.log("Arquivar comentário com id: " + id)
-      else console.log("Arquivar resposta de comentário com id: " + id)
+      type === "comment" ?
+        await CommentsService.inativeComment(payload) :
+        await CommentsService.inativeReply(payload);
     } catch (e) {
+      setMessageError({
+        type: `arquivar ${type === "comment" ? "comentário" : "resposta de comentário"}`,
+        text: "Erro inesperado. Tente novamente mais tarde!"
+      })
       setModalError(true)
     } finally {
-      setIsLoading(false)
+      type === "comment" ?
+        updateComments() :
+        handleOpenModalReplies();
       setModalConfirmFile(false)
+      setIsLoading(false)
     }
   }
 
-  const handleCloseModal = (target) => {
-    target === "replies" ? setModalReplies(false) : setModalInputComment(false);
+  const handleCloseModal = async () => {
+    setModalReplies(false)
+    updateComments();
   }
 
-  const handleSendComment = (commentText) => {
-    //TODO: enviar comentário
-    console.log(`Comentar para a publicação com id: ${id} e texto: ${commentText}`)
-    setModalInputComment(false);
+  const handleCloseModalError = () => {
+    if (messageError.type === "carregar os comentários")
+      navigate("../conteudo-exclusivo/listagem")
+    else if (messageError.type === "carregar as respostas de comentários") {
+      setModalError(false)
+      setModalReplies(false)
+    } else
+      setModalError(false)
   }
-
-  const handleSendReply = (commentId, replyText) => {
-    //TODO: enviar resposta de comentário
-    console.log(`Responder ao comentário com id: ${commentId} e texto: ${replyText}`)
-  }
-
 
   const buttonsModalFileConfirm = [
     {
@@ -225,7 +198,6 @@ const ExclusivePostComments = () => {
       handleClick: handleFile,
     }
   ];
-
 
   const routes = [
     {
@@ -247,27 +219,34 @@ const ExclusivePostComments = () => {
 
   return (
     <div className="container">
+      <Loader loading={isLoading} />
       <PageHeader
         title={"Comentários do Conteúdo Exclusivo"}
         breadcrumbRender={() => <RouterBreadcrumb routes={routes} />}
       />
       <div className={styles.containerComments}>
-
         <div className={styles.postTitle}>
-          <h1 style={{ margin: 0 }}>
-            Título do conteúdo: <span style={{ fontWeight: 700 }}>{title}</span>
-          </h1>
-          <Button
-            type="text"
-            children={"Comentar"}
-            stylesButton="buttonPrimary"
-            handleClick={() => setModalInputComment(true)}
-          />
+          <div className={styles.statusIndicator}>
+            <Badge
+              status="processing"
+              color={postStatus ? "green" : "red"}
+              text={postStatus ? "online" : "offline"}
+            />
+          </div>
+          <div className={styles.mainTitle}>
+            <h1>
+              Título do conteúdo: <span style={{ fontWeight: 700 }}>{title}</span>
+            </h1>
+            <Button
+              type="text"
+              children={"Voltar"}
+              stylesButton="buttonBackground"
+              handleClick={() => navigate("../conteudo-exclusivo/listagem")}
+            />
+          </div>
         </div>
 
-        <Loader loading={isLoading} />
-
-        {!isLoading && (commentsData?.totalElements === 0 ?
+        {isLoading !== "comments" && (commentsData?.totalElements === 0 ?
           <>
             <EmptyState description="Ops... conteúdo ainda sem comentários" />
             <Button
@@ -283,14 +262,18 @@ const ExclusivePostComments = () => {
               data={commentsData?.content}
               handleOpenModalReplies={handleOpenModalReplies}
               handleFileComment={handleOpenModalFileConfirm}
+              isActive={postStatus}
             />
 
             <div className={styles.paginationContainer}>
               <Pagination
-                total={commentsData.totalElements}
-                showTotal={(total, range) => `${range[0]}-${range[1]} of ${total} itens`}
-                defaultPageSize={commentsData.size}
+                total={commentsData?.totalElements}
+                showTotal={(total, range) => `${range[0]}-${range[1]} de ${total} itens`}
+                defaultPageSize={commentsData?.size}
                 defaultCurrent={1}
+                current={currentPageComments}
+                onChange={(page) => setCurrentPageComments(page)}
+                hideOnSinglePage={true}
               />
             </div>
           </>
@@ -302,15 +285,11 @@ const ExclusivePostComments = () => {
         commentData={commentSelected}
         data={repliesData}
         visible={modalReplies}
-        handleFileReply={handleOpenModalFileConfirm}
-        handleSendReply={handleSendReply}
-        onCloseModal={() => handleCloseModal('replies')}
-      />
-      <ModalInputComment
-        title={<p>Comentando em: <span style={{ fontWeight: 700 }}>{title}</span></p>}
-        visible={modalInputComment}
-        onCloseModal={() => handleCloseModal('comment')}
-        handleSendComment={handleSendComment}
+        onFileReply={handleOpenModalFileConfirm}
+        onSendReply={handleSendReply}
+        onCloseModal={handleCloseModal}
+        onChangePage={handleChangePageReplies}
+        isActive={postStatus}
       />
 
       <Modal
@@ -325,6 +304,23 @@ const ExclusivePostComments = () => {
           <p>Tem certeza que deseja arquivar {dataToFile?.type === "comment" ? "este comentário?" : "esta resposta de comentário?"}</p>
         </div>
       </Modal>
+
+      <ModalError
+        visible={modalError}
+        buttons={[{
+          text: `${messageError.type === "carregar os comentários" ? "Voltar para a listagem" : "Fechar"}`,
+          styles: "buttonDefault",
+          handleClick: handleCloseModalError
+        }]}
+        onCloseModal={handleCloseModalError}
+      >
+        <div className="messageModalDelete">
+          <p>Falha ao {messageError?.type}</p>
+
+          <p>Mensagem de erro:</p>
+          <p className="modalMessageAlert">{messageError?.text}</p>
+        </div>
+      </ModalError>
     </div >
   );
 }

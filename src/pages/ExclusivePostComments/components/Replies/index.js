@@ -5,7 +5,7 @@ import moment from "moment";
 
 const Replies = ({
   data,
-  handleFileReply
+  onFileReply
 }) => {
 
   return (
@@ -23,7 +23,7 @@ const Replies = ({
             <div className={styles.footer}>
               <Button
                 stylesButton={styles.buttonFile}
-                handleClick={() => handleFileReply("reply", reply.id)}
+                handleClick={() => onFileReply("reply", reply.id)}
               >
                 Arquivar
               </Button>
