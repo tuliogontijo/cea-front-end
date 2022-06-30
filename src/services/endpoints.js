@@ -6,6 +6,7 @@ const LEADS = "Leads";
 const AUTH = "Auth";
 const EXCLUSIVEPOST = "Exclusivepost";
 const STUDENTS = "Students";
+const COMMENTS = "Comments";
 
 const ROUTES = [];
 
@@ -51,6 +52,14 @@ ROUTES[STUDENTS] = {
   updateName: (id) => `/admin/students/${id}`,
 }
 
+ROUTES[COMMENTS] = {
+  listCommentsPerPage: (queries, id) => `/admin/comments/exclusive-post/${id}/?${formatQuery(queries)}`,
+  inativeComment: () => `/admin/comments/`,
+  listRepliesPerPage: (queries, id) => `/admin/comments/${id}/comments-reply/?${formatQuery(queries)}`,
+  inativeReply: () => `/admin/comments/reply`,
+  createReply: () => `/admin/comments/reply/create`,
+}
+
 export {
   ROUTES,
   ADMINISTRATOR,
@@ -59,4 +68,5 @@ export {
   AUTH,
   EXCLUSIVEPOST,
   STUDENTS,
+  COMMENTS,
 };

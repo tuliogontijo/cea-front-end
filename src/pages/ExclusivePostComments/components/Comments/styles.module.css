@@ -13,3 +13,7 @@
 .createdAtText {
   font-size: 12px;
 }
+
+.divider {
+  margin: 16px 0px !important;
+}

@@ -135,8 +135,8 @@ const ExclusivePostList = () => {
     await getPollTopics(id, title);
   }
 
-  const handleDetailsContent = async (id, title) => {
-    navigate(`/conteudo-exclusivo/comentarios`, { state: { id, title } });
+  const handleDetailsContent = async (id, title, status) => {
+    navigate(`/conteudo-exclusivo/comentarios`, { state: { id, title, status } });
   }
 
   const handleCloseModalProgress = () => {
@@ -164,9 +164,9 @@ const ExclusivePostList = () => {
   const actionsTable = [
     {
       name: "Detalhes",
-      func: async ({ id, title, type }) => {
+      func: async ({ id, title, status, type }) => {
         const operationExec = type === "TEXT" ? handleDetailsContent : handleDetailsSurvey;
-        await operationExec(id, title);
+        await operationExec(id, title, status);
       },
       icon: <InfoCircleFilled />
     },

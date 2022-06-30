@@ -10,11 +10,11 @@ import ActionTable from "../../components/ActionTable";
 import ColumnDateTable from "../../components/ColumnDateTable";
 import RouterBreadcrumb from "../../components/RouterBreadcrumb";
 import ModalError from "../../components/Modal/components/ModalError";
+import ModalSuccess from "../../components/Modal/components/ModalSuccess";
 
 import {AdministratorService} from "../../services";
 
 import styles from "./styles.module.css";
-import ModalSuccess from "../../components/Modal/components/ModalSuccess";
 
 const routes = [
   {
