@@ -50,6 +50,7 @@ ROUTES[STUDENTS] = {
   listPerPage: (queries) => `/admin/students/?${formatQuery(queries)}`,
   importStudents: () => '/admin/students/upload',
   updateName: (id) => `/admin/students/${id}`,
+  updateDateInactivation: (id) => `/admin/students/inactivate/${id}`
 }
 
 ROUTES[COMMENTS] = {
