@@ -1,10 +1,12 @@
 import { createContext, useState } from "react";
 import moment from "moment";
+import { notification } from "antd";
 
 import { ceaAPI } from "../services/axios";
 import { AuthService } from "../services";
-import { TOKEN_DURATION_HOUR } from "../constants/authConfig";
 import useStore from "../hooks/useStore";
+
+import { TOKEN_DURATION_HOUR } from "../constants/authConfig";
 
 const Context = createContext();
 
@@ -24,6 +26,15 @@ const AuthProvider = ({ children }) => {
       const accessExpired = dateNow.isAfter(expiresAt);
 
       if (accessExpired) {
+        notification.warning({
+          message: "Ooops...",
+          description: `
+            Seu acesso expirou! Mas não se preocupe, você poderá acessar 
+            o sistema novamente após realizar um novo login.
+          `,
+          duration: null,
+        });
+
         return {
           isPrimaryAccess,
           authenticated: false,
