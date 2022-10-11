@@ -27,7 +27,7 @@ const ExclusivePosts = {
     return ceaAPI.put(ROUTES[EXCLUSIVEPOST].editSurvey(id), payload);
   },
   findLinks: (id) => {
-    return ceaAPI.get(ROUTES[EXCLUSIVEPOST].findLinks("1"));
+    return ceaAPI.get(ROUTES[EXCLUSIVEPOST].findLinks(id));
   }
 }
 
