@@ -44,6 +44,7 @@ ROUTES[EXCLUSIVEPOST] = {
   findPollTopics: (id) => `/admin/poll-topics/exclusive-post/${id}`,
   editContent: (id) => `/admin/exclusive-posts/content/${id}`,
   editSurvey: (id) => `/admin/exclusive-posts/survey/${id}`,
+  findLinks: (id) => `/admin/links/exclusive-post/${id}`,
 }
 
 ROUTES[STUDENTS] = {
