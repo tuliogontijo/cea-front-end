@@ -19,6 +19,7 @@
   border-radius: 4px;
   display: flex;
   flex-direction: column;
+  z-index: 999;
 }
 
 .postTitle h1 {
@@ -50,4 +51,20 @@
   display: block;
   margin: auto;
   margin-top: 24px;
+}
+
+.containerAddComment {
+  display: flex;
+  margin-bottom: 24px;
+}
+
+.containerAddComment > div:first-of-type {
+  flex-grow: 1;
+}
+
+.sendButton {
+  height: 32px;
+  display: flex;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
 }

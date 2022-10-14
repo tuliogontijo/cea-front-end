@@ -60,6 +60,7 @@ ROUTES[COMMENTS] = {
   listRepliesPerPage: (queries, id) => `/admin/comments/${id}/comments-reply/?${formatQuery(queries)}`,
   inativeReply: () => `/admin/comments/reply`,
   createReply: () => `/admin/comments/reply/create`,
+  addComments: () => `/admin/comments/create`,
 }
 
 export {

@@ -16,6 +16,9 @@ const Comments = {
   },
   createReply: (payload) => {
     return ceaAPI.post(ROUTES[COMMENTS].createReply(), payload);
+  },
+  addComment: (payload) => {
+    return ceaAPI.post(ROUTES[COMMENTS].addComments(), payload);
   }
 };
 
