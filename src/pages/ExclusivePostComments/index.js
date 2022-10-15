@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import { Badge, PageHeader, Pagination } from "antd";
+import { Badge, PageHeader, Pagination, Popover } from "antd";
 import { useLocation, useNavigate } from "react-router-dom";
-import { ExclamationCircleOutlined } from "@ant-design/icons";
+import { ExclamationCircleOutlined, SendOutlined } from "@ant-design/icons";
 
 import useStore from "../../hooks/useStore";
 import RouterBreadcrumb from "../../components/RouterBreadcrumb";
@@ -17,6 +17,8 @@ import ModalRepliesView from "./components/ModalRepliesView";
 import { CommentsService } from "../../services";
 
 import styles from "./styles.module.css";
+import TextArea from "antd/lib/input/TextArea";
+import { useAddComment } from "../../hooks/useAddComment";
 
 const ExclusivePostComments = () => {
 
@@ -35,6 +37,14 @@ const ExclusivePostComments = () => {
   const [currentPageComments, setCurrentPageComments] = useState(1);
   const [modalError, setModalError] = useState(false);
   const [messageError, setMessageError] = useState("");
+
+  const {
+    comment,
+    commentEmpty,
+    cleanComments,
+    handleAddComment,
+    handleCommentEmpty
+  } = useAddComment();
 
   const { getDataLocalStorage } = useStore();
   const userId = getDataLocalStorage("user")?.userId;
@@ -171,6 +181,34 @@ const ExclusivePostComments = () => {
     }
   }
 
+  const addComment = async () => {
+    if (!comment) {
+      handleCommentEmpty(true);
+      return;
+    }
+
+    setIsLoading(true);
+    try {
+      const payload = {
+        text: comment,
+        studentId: userId,
+        exclusivePostId: postId,
+      };
+
+      await CommentsService.addComment(payload);
+      await updateComments();
+    } catch (e) {
+      setMessageError({
+        type: "fechar",
+        text: "Erro inesparado ao adicionar comentário. Tente novamente mais tarde!"
+      });
+      setModalError(true);
+    } finally {
+      cleanComments();
+      setIsLoading(false);
+    }
+  }
+
   const handleCloseModal = async () => {
     setModalReplies(false)
     updateComments();
@@ -237,13 +275,46 @@ const ExclusivePostComments = () => {
             <h1>
               Título do conteúdo: <span style={{ fontWeight: 700 }}>{title}</span>
             </h1>
+
             <Button
               type="text"
               children={"Voltar"}
-              stylesButton="buttonBackground"
+              stylesButton="buttonBackground buttonMarginLeft"
               handleClick={() => navigate("../conteudo-exclusivo/listagem")}
             />
           </div>
+        </div>
+
+        <div className={styles.containerAddComment}>
+          <TextArea
+            maxLength={255}
+            autoSize={{ minRows: 1, maxRows: 3 }}
+            placeholder="Faça um comentário aqui"
+            onChange={handleAddComment}
+            value={comment}
+            showCount
+            allowClear
+            autoFocus
+            status={"error"}
+          />
+
+          <Popover
+            content={<span style={{ color: "white" }}>O campo de comentário não pode ficar vazio!</span>}
+            color={"black"}
+            trigger="hover"
+            visible={commentEmpty}
+            onVisibleChange={() => handleCommentEmpty(false)}
+          >
+            <Button
+              type="text"
+              stylesButton={`buttonBackground ${styles.sendButton}`}
+              handleClick={addComment}
+            >
+              <SendOutlined
+                className={styles.iconSend}
+              />
+            </Button>
+          </Popover>
         </div>
 
         {isLoading !== "comments" && (commentsData?.totalElements === 0 ?
